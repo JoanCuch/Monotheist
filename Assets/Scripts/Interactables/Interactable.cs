@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+namespace Monotheist
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract class Interactable : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public abstract void Interact(Human human);
     }
 }

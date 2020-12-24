@@ -13,11 +13,11 @@ namespace Monotheist.FSM {
 
 		public override void Execute()
 		{		
-			Individual owner = _model.owner;
+			Human owner = _model.owner;
 
 			if (Vector2.Distance(owner.Target.position, owner.transform.position) <= owner.TargetRange)
 			{
-				ChangeState(_model.idleState);
+				ChangeState(_model.interactState);
 			}
 			else
 			{

@@ -6,20 +6,23 @@ namespace Monotheist.FSM
 {
 	public class InteractState : State
 	{
-
+		Interactable item;
 		public override void Enter()
 		{
-			throw new System.NotImplementedException();
+			item = _model.owner.Target.transform.GetComponent<Interactable>();
+			if (item == null) ChangeState(_model.idleState);
 		}
 
 		public override void Execute()
 		{
-			throw new System.NotImplementedException();
+			if(item != null) item.Interact(_model.owner);
+			
+			ChangeState(_model.idleState);
 		}
 
 		public override void Exit()
 		{
-			throw new System.NotImplementedException();
+			item = null;
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace Monotheist.FSM
 {
     public class StateMachineInstaller : MonoBehaviour
     {    
-        public Individual human;
+        public Human human;
         public StateMachineModel model;
         // Start is called before the first frame update
         void Start()

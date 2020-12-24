@@ -12,7 +12,11 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			if (_model.owner.Bored) ChangeState(_model.walkState);
+			if (_model.owner.IsTired() &&
+				_model.owner.SearchTarget("bed"))
+			{
+				ChangeState(_model.walkState);
+			}
 		}
 
 		public override void Exit()
