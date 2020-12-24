@@ -11,11 +11,6 @@ namespace Monotheist.FSM
         private Action<State> _changeStateEvent;
         protected StateMachineModel _model;
 
-        public State (StateMachineModel model)
-		{
-            _model = model;
-        }
-
         public abstract void Enter();
         public abstract void Execute();
         public abstract void Exit();
@@ -26,8 +21,19 @@ namespace Monotheist.FSM
         }
         protected void ChangeState(State newState)
         {
+            if (newState == null)
+            {
+                Debug.LogWarning("Null newState");
+                return;
+            }
+
             _changeStateEvent.Invoke(newState);
         }
+
+        public void SetModel(StateMachineModel model)
+		{
+            _model = model;
+		}
 
     }
 }

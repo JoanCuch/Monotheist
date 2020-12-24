@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-namespace Monotheist.FSM {
-	public class WalkState : State
+namespace Monotheist.FSM
+{
+	public class InteractState : State
 	{
-		public WalkState(StateMachineModel model) : base(model)
-		{
-		}
 
 		public override void Enter()
 		{

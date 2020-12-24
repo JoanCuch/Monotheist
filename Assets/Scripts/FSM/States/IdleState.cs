@@ -6,21 +6,17 @@ namespace Monotheist.FSM
 {
 	public class IdleState : State
 	{
-		public IdleState(StateMachineModel model) : base(model)
-		{
-		}
-
 		public override void Enter()
 		{
 		}
 
 		public override void Execute()
 		{
+			if (_model.owner.Bored) ChangeState(_model.walkState);
 		}
 
 		public override void Exit()
 		{
-			throw new System.NotImplementedException();
 		}
 	}
 }

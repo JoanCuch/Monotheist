@@ -7,9 +7,6 @@ namespace Monotheist.FSM
 {
 	public class StartState : State
 	{
-		public StartState(StateMachineModel model) : base(model)
-		{
-		}
 
 		public override void Enter()
 		{

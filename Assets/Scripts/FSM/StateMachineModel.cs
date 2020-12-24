@@ -6,6 +6,7 @@ namespace Monotheist.FSM
 {
     public struct StateMachineModel
     {
+        public Individual owner;
         public WalkState walkState;
         public InteractState interactState;
         public IdleState idleState;
