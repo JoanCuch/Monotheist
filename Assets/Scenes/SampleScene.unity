@@ -251,12 +251,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1762290846}
-  _velocity: 2
+  _velocity: 5
   _targetRange: 1
   _energy: 0
   _initialEnergy: 100
   _energyReductionPerSecond: 3
-  _energyLimit: 50
+  _energyTiredLimit: 50
+  _energyAwakeLimit: 90
 --- !u!4 &794087745
 Transform:
   m_ObjectHideFlags: 0
@@ -478,3 +479,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf296c677315494ba62300cb465f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _regenerationPerSecond: 13

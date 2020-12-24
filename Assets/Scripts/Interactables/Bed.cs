@@ -5,8 +5,11 @@ using UnityEngine;
 namespace Monotheist
 {
     public class Bed : Interactable
-    {	
-		void Start()
+    {
+        [SerializeField] private float _regenerationPerSecond;
+        
+        
+        void Start()
         {
 
         }
@@ -16,9 +19,10 @@ namespace Monotheist
         
         }
 
-        public override void Interact(Human human)
+        public override bool Interact(Human human)
 		{
-            human.AddEnergy(100);
+            human.AddEnergy(_regenerationPerSecond * Time.deltaTime);
+            return true;
 		}
     }
 }

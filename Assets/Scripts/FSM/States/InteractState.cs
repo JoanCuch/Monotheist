@@ -15,9 +15,16 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			if(item != null) item.Interact(_model.owner);
-			
-			ChangeState(_model.idleState);
+			if (item != null)
+			{
+				bool continueInteracting = item.Interact(_model.owner);
+
+				if(continueInteracting == false || _model.owner.IsAwake()) ChangeState(_model.idleState);
+			}
+			else
+			{
+				ChangeState(_model.idleState);
+			}		
 		}
 
 		public override void Exit()

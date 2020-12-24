@@ -16,7 +16,8 @@ namespace Monotheist
         [SerializeField, Range(0, 100)] private float _energy;
         [SerializeField, Range(0, 100)] private float _initialEnergy;
         [SerializeField] private float _energyReductionPerSecond;
-        [SerializeField, Range(0, 100)] private float _energyLimit;
+        [SerializeField, Range(0, 100)] private float _energyTiredLimit;
+        [SerializeField, Range(0, 100)] private float _energyAwakeLimit;
 
         public Transform Target => _target;
         public float Velocity => _velocity;
@@ -50,7 +51,12 @@ namespace Monotheist
 
         public bool IsTired()
 		{
-            return _energy <= _energyLimit;
+            return _energy <= _energyTiredLimit;
+		}
+
+        public bool IsAwake()
+		{
+            return _energy >= _energyAwakeLimit;
 		}
 
         public bool SearchTarget(string tag)
