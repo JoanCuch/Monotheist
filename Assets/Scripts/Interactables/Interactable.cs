@@ -6,6 +6,6 @@ namespace Monotheist
 {
     public abstract class Interactable : MonoBehaviour
     {
-        public abstract bool Interact(Human human);
+        public abstract bool Interact(HumanNecessities human);
     }
 }

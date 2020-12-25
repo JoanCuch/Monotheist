@@ -2,17 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+namespace Monotheist
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Food : Interactable
     {
-        
-    }
+        [SerializeField] private float _nutritionPerSecond;
+        [SerializeField] private float _totalNutrition;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+		void Start()
+        {
+
+        }
+
+        void Update()
+        {
+
+        }
+
+        public override bool Interact(HumanNecessities human)
+        {
+            float nutrition = _nutritionPerSecond * Time.deltaTime;
+            
+            if(_totalNutrition >= nutrition)
+			{
+                human.AddEnergy(nutrition);
+                _totalNutrition -= nutrition;
+                return true;
+			}
+			else
+			{
+                human.AddEnergy(_totalNutrition);
+                Destroy(this.gameObject);
+                return false;
+			}
+        }
     }
 }

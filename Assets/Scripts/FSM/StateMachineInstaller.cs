@@ -8,15 +8,15 @@ namespace Monotheist.FSM
 {
     public class StateMachineInstaller : MonoBehaviour
     {    
-        public Human human;
+        public HumanNecessities human;
         public StateMachineModel model;
-        // Start is called before the first frame update
+        public HumanConfig humanConfig;
+
         void Start()
         {
             Install();
         }
 
-        // Update is called once per frame
         void Update()
         {
 
@@ -27,7 +27,7 @@ namespace Monotheist.FSM
             model = new StateMachineModel();
             
             model.idleState = new IdleState();
-            model.walkState = new WalkState();
+            model.walkState = new WalkState(humanConfig);
             model.interactState = new InteractState();
             model.startState = new StartState();
             model.owner = human;
@@ -47,7 +47,7 @@ namespace Monotheist.FSM
                 state.Subscribe(controller.ChangeState);
 			}
 
-            human.Configurate(controller);
+            human.Configurate(controller, humanConfig);
 
             controller.ChangeState(model.startState);
         }

@@ -19,7 +19,7 @@ namespace Monotheist
         
         }
 
-        public override bool Interact(Human human)
+        public override bool Interact(HumanNecessities human)
 		{
             human.AddEnergy(_regenerationPerSecond * Time.deltaTime);
             return true;

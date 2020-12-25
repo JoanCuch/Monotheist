@@ -19,7 +19,10 @@ namespace Monotheist.FSM
 			{
 				bool continueInteracting = item.Interact(_model.owner);
 
-				if(continueInteracting == false || _model.owner.IsAwake()) ChangeState(_model.idleState);
+				if (continueInteracting == false || _model.owner.GetCurrentNecessity() == HumanConfig.Necessities.fullfilled)
+				{
+					ChangeState(_model.idleState);
+				}
 			}
 			else
 			{

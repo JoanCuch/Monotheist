@@ -12,8 +12,7 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			if (_model.owner.IsTired() &&
-				_model.owner.SearchTarget("Bed"))
+			if(_model.owner.GetCurrentNecessity() != HumanConfig.Necessities.fullfilled)
 			{
 				ChangeState(_model.walkState);
 			}
