@@ -14,7 +14,17 @@ namespace Monotheist.FSM
 		{
 			if(_model.owner.GetCurrentNecessity() != HumanConfig.Necessities.fullfilled)
 			{
-				ChangeState(_model.walkState);
+				Debug.Log("New necessity detected: " + _model.owner.GetCurrentNecessity().ToString());
+				_model.owner.SearchTarget(_model.owner.GetCurrentNecessity().ToString());
+
+				if (_model.owner.Target != null)
+				{
+					ChangeState(_model.walkState);					
+				}
+				else
+				{
+					Debug.LogWarning("no target found");
+				}			
 			}
 		}
 

@@ -26,13 +26,13 @@ namespace Monotheist
             
             if(_totalNutrition >= nutrition)
 			{
-                human.AddEnergy(nutrition);
+                human.AddSatiation(nutrition);
                 _totalNutrition -= nutrition;
                 return true;
 			}
 			else
 			{
-                human.AddEnergy(_totalNutrition);
+                human.AddSatiation(_totalNutrition);
                 Destroy(this.gameObject);
                 return false;
 			}

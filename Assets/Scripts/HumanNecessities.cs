@@ -26,48 +26,62 @@ namespace Monotheist
 
         void Update()
 		{
-			UpdateNecessites();
-
+			UpdateNecessities();
 
             if (_currentNecessity != HumanConfig.Necessities.fullfilled)
-            {
-                switch (_currentNecessity)
-                {
-                    case HumanConfig.Necessities.energy:
-                        if (_currentEnergy >= _config.energyAwakeLimit)
-                        {
-                            _currentNecessity = HumanConfig.Necessities.fullfilled;
-                        }
-                        break;
-
-                    case HumanConfig.Necessities.satiation:
-                        if (_currentSatiation >= _config.satiationSatiatedLimit)
-                        {
-                            _currentNecessity = HumanConfig.Necessities.fullfilled;
-                        }
-                        break;
-                }
-            }
-
-            if(_currentNecessity != HumanConfig.Necessities.fullfilled)
-            {
-                if(_currentEnergy <= _config.energyTiredLimit)
-			    {
-                    _currentNecessity = HumanConfig.Necessities.energy;
-			    }
-                else if(_currentSatiation <= _config.satiationHungryLimit)
-                {
-                    _currentNecessity = HumanConfig.Necessities.satiation;
-				}
+			{
+				CheckFullfilledNecessity();
 			}
-                 
+			else
+			{
+				CheckNewNecessity();
+			}
+
 			if (_stateMachine != null)
 			{
 				_stateMachine.Update();
 			}
 		}
 
-		private void UpdateNecessites()
+		private void CheckNewNecessity()
+		{
+			if (_currentEnergy <= _config.energyTiredLimit)
+			{
+				_currentNecessity = HumanConfig.Necessities.energy;
+				Debug.LogWarning("energy");
+			}
+			else if (_currentSatiation <= _config.satiationHungryLimit)
+			{
+				_currentNecessity = HumanConfig.Necessities.satiation;
+				Debug.Log("satiation");
+			}
+		}
+
+		private void CheckFullfilledNecessity()
+		{
+			switch (_currentNecessity)
+			{
+				case HumanConfig.Necessities.energy:
+					if (_currentEnergy >= _config.energyAwakeLimit)
+					{
+						_currentNecessity = HumanConfig.Necessities.fullfilled;
+						_target = null;
+						Debug.LogWarning("energy fullfilled");
+					}
+					break;
+
+				case HumanConfig.Necessities.satiation:
+					if (_currentSatiation >= _config.satiationSatiatedLimit)
+					{
+						_currentNecessity = HumanConfig.Necessities.fullfilled;
+						_target = null;
+						Debug.LogWarning("satiation fullfilled");
+					}
+					break;
+			}
+		}
+
+		private void UpdateNecessities()
 		{
 			AddEnergy(-1 * _config.energyReductionPerSecond * Time.deltaTime);
             AddSatiation(-1 * _config.satiationReductionPerSecond * Time.deltaTime);
@@ -98,7 +112,9 @@ namespace Monotheist
 
         public bool SearchTarget(string tag)
 		{
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _config.searchRange);
+			_target = null;
+			
+			Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _config.searchRange);
 
             if(hits != null)
 			{
@@ -129,7 +145,7 @@ namespace Monotheist
                 if(nearestTarget != null)
 				{
                     _target = nearestTarget;
-                    Debug.Log("new target: " + _target);
+                    Debug.Log("New target adquired: " + _target.name);
                     return true;
 				}
 			}

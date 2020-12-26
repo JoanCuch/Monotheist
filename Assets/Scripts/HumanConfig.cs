@@ -30,7 +30,5 @@ namespace Monotheist
 		public float velocity;
 		public float interactRange;
 		public float searchRange;
-
-
 	}
 }

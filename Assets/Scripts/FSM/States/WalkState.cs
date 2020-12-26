@@ -14,14 +14,17 @@ namespace Monotheist.FSM {
 		
 		public override void Enter()
 		{
-			_model.owner.SearchTarget("Bed");
 		}
 
 		public override void Execute()
 		{		
 			HumanNecessities owner = _model.owner;
 
-			if (Vector2.Distance(owner.Target.position, owner.transform.position) <= _ownerConfig.interactRange)
+			if (owner.Target == null)
+			{			
+				ChangeState(_model.idleState);
+			}
+			else if (Vector2.Distance(owner.Target.position, owner.transform.position) <= _ownerConfig.interactRange)
 			{
 				ChangeState(_model.interactState);
 			}
