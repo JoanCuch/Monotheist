@@ -12,6 +12,7 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
+			base.Execute();
 			if(_model.owner.GetCurrentNecessity() != HumanConfig.Necessities.fullfilled)
 			{
 				Debug.Log("New necessity detected: " + _model.owner.GetCurrentNecessity().ToString());
@@ -23,7 +24,7 @@ namespace Monotheist.FSM
 				}
 				else
 				{
-					Debug.LogWarning("no target found");
+					Debug.Log("no target found");
 				}			
 			}
 		}

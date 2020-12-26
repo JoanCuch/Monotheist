@@ -30,13 +30,15 @@ namespace Monotheist.FSM
             model.walkState = new WalkState(humanConfig);
             model.interactState = new InteractState();
             model.startState = new StartState();
+            model.deathState = new DeathState();
             model.owner = human;
 
             List<State> stateList = new List<State> {
                 model.idleState,
                 model.walkState,
                 model.interactState,
-                model.startState
+                model.startState,
+                model.deathState
             };
 
             StateMachineController controller = new StateMachineController();

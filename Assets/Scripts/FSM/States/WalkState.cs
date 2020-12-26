@@ -17,7 +17,8 @@ namespace Monotheist.FSM {
 		}
 
 		public override void Execute()
-		{		
+		{
+			base.Execute();
 			HumanNecessities owner = _model.owner;
 
 			if (owner.Target == null)

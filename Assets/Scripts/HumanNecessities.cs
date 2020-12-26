@@ -28,7 +28,11 @@ namespace Monotheist
 		{
 			UpdateNecessities();
 
-            if (_currentNecessity != HumanConfig.Necessities.fullfilled)
+			if (_currentEnergy == 0 || _currentSatiation == 0)
+			{
+				_currentNecessity = HumanConfig.Necessities.dead;			
+			}
+			else if (_currentNecessity != HumanConfig.Necessities.fullfilled)
 			{
 				CheckFullfilledNecessity();
 			}
@@ -44,16 +48,14 @@ namespace Monotheist
 		}
 
 		private void CheckNewNecessity()
-		{
+		{		
 			if (_currentEnergy <= _config.energyTiredLimit)
 			{
 				_currentNecessity = HumanConfig.Necessities.energy;
-				Debug.LogWarning("energy");
 			}
 			else if (_currentSatiation <= _config.satiationHungryLimit)
 			{
 				_currentNecessity = HumanConfig.Necessities.satiation;
-				Debug.Log("satiation");
 			}
 		}
 
@@ -66,7 +68,6 @@ namespace Monotheist
 					{
 						_currentNecessity = HumanConfig.Necessities.fullfilled;
 						_target = null;
-						Debug.LogWarning("energy fullfilled");
 					}
 					break;
 
@@ -75,7 +76,6 @@ namespace Monotheist
 					{
 						_currentNecessity = HumanConfig.Necessities.fullfilled;
 						_target = null;
-						Debug.LogWarning("satiation fullfilled");
 					}
 					break;
 			}

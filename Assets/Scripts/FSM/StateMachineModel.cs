@@ -11,5 +11,6 @@ namespace Monotheist.FSM
         public InteractState interactState;
         public IdleState idleState;
         public StartState startState;
+        public DeathState deathState;
     }
 }

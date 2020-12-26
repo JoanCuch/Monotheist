@@ -11,7 +11,8 @@ namespace Monotheist
 		{
 			fullfilled,
 			energy,
-			satiation
+			satiation,
+			dead
 		}
 		
 		//Energy

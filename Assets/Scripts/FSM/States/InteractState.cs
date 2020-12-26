@@ -9,6 +9,7 @@ namespace Monotheist.FSM
 		Interactable item;
 		public override void Enter()
 		{
+			base.Execute();
 			item = _model.owner.Target.transform.GetComponent<Interactable>();
 			if (item == null) ChangeState(_model.idleState);
 		}

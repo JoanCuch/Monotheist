@@ -1,21 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace Monotheist.FSM
-{
-	public class StartState : State
+namespace Monotheist.FSM {
+
+	public class DeathState : State
 	{
-
 		public override void Enter()
 		{
+			Debug.LogWarning(_model.owner.name + " has died. Rin in pepperoni");
+			GameObject.Destroy(_model.owner.gameObject);
 		}
 
 		public override void Execute()
 		{
-			base.Execute();
-			ChangeState(_model.idleState);
 		}
 
 		public override void Exit()

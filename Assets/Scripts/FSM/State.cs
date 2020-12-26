@@ -12,7 +12,13 @@ namespace Monotheist.FSM
         protected StateMachineModel _model;
 
         public abstract void Enter();
-        public abstract void Execute();
+        public virtual void Execute()
+        {
+            if(_model.owner.GetCurrentNecessity() == HumanConfig.Necessities.dead)
+			{
+                ChangeState(_model.deathState);
+			}
+        }
         public abstract void Exit();
 
         public void Subscribe(Action<State> action)
