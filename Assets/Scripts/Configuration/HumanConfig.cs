@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Monotheist
 {
-	[CreateAssetMenu(menuName = "Configuration", fileName = "Configuration")]
+	[CreateAssetMenu(fileName = "HumanConfig")]
 	public class HumanConfig : ScriptableObject
 	{
 		public enum Necessities

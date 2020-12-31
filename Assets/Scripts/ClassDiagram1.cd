@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Monotheist.HumanConfig" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAAQAAAAIAAAgAAAQAAAAAAAAAAIAAIAAAQAAAAQAAI=</HashCode>
+      <FileName>Assets\Scripts\HumanConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.HumanNecessities" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIACAAACAIAAgAAAAABCCAQAAgABAAAIAAAAABAAQ=</HashCode>
+      <FileName>Assets\Scripts\HumanNecessities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.Bed">
+    <Position X="8.75" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAEAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interactables\Bed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.Food">
+    <Position X="11" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAIAAAAEgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interactables\Food.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.Interactable">
+    <Position X="10" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interactables\Interactable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.State">
+    <Position X="13.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAABAQAAgAAAAAIAAAGAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\State.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.StateMachineController">
+    <Position X="23.75" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\StateMachineController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.StateMachineInstaller">
+    <Position X="27" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>BAQAIAAAACAAAAAEAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\StateMachineInstaller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.DeathState" Collapsed="true">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\States\DeathState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.IdleState" Collapsed="true">
+    <Position X="15.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\States\IdleState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.InteractState" Collapsed="true">
+    <Position X="18" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAQAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\States\InteractState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.StartState" Collapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\States\StartState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Monotheist.FSM.WalkState" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAQAAAAAAAAAAAAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FSM\States\WalkState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Monotheist.FSM.StateMachineModel" Collapsed="true">
+    <Position X="20.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAggIAAAAAAAAAAACAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Scripts\FSM\StateMachineModel.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
