@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Monotheist.Human;
 
 namespace Monotheist
 {
 	[CreateAssetMenu(fileName = "HumanConfig")]
 	public class HumanConfig : ScriptableObject
 	{
-		public enum Necessities
+		/*public enum Necessities
 		{
 			fullfilled,
 			energy,
 			satiation,
 			dead
-		}
+		}*/
+
+		public NeedConfig energyConfig;
+		public NeedConfig satiationConfig;
 		
 		//Energy
 		[Range(0, 100)] public float initialEnergy;

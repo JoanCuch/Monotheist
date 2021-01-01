@@ -2,39 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoodSpawner : MonoBehaviour
+namespace Monotheist
 {
-    [SerializeField] private Transform _foodParent;
-    [SerializeField] private GameObject _foodPrefab;
-    [SerializeField] private float _spawnsPerSecond;
-    [SerializeField] private float _spawnRange;
-    [SerializeField] private bool _spawnActivated;
-
-    
-    private float _timer;
-
-    void Start()
+    public class FoodSpawner : MonoBehaviour
     {
-        _timer = _spawnsPerSecond;
-        _spawnActivated = true;
-    }
+        [SerializeField] private Transform _foodParent;
+        [SerializeField] private GameObject _foodPrefab;
+        [SerializeField] private float _spawnsPerSecond;
+        [SerializeField] private float _spawnRange;
+        [SerializeField] private bool _spawnActivated;
 
-    void Update()
-    {
-        if (_spawnActivated)
+
+        private float _timer;
+
+        void Start()
         {
-            _timer -= Time.deltaTime;
+            _timer = _spawnsPerSecond;
+            _spawnActivated = true;
+        }
 
-            if (_timer <= 0)
+        void Update()
+        {
+            if (_spawnActivated)
             {
-                _timer = _spawnsPerSecond;
+                _timer -= Time.deltaTime;
 
-                float randomX = Random.Range(-1 * _spawnRange, _spawnRange);
-                float randomY = Random.Range(-1 * _spawnRange, _spawnRange);
+                if (_timer <= 0)
+                {
+                    _timer = _spawnsPerSecond;
 
-                Vector3 randomPosition = new Vector3(transform.position.x + randomX, transform.position.y + randomY, transform.position.z);
+                    float randomX = Random.Range(-1 * _spawnRange, _spawnRange);
+                    float randomY = Random.Range(-1 * _spawnRange, _spawnRange);
 
-                Instantiate(_foodPrefab, randomPosition, transform.rotation, _foodParent);
+                    Vector3 randomPosition = new Vector3(transform.position.x + randomX, transform.position.y + randomY, transform.position.z);
+
+                    Instantiate(_foodPrefab, randomPosition, transform.rotation, _foodParent);
+                }
             }
         }
     }

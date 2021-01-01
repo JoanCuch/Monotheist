@@ -3,11 +3,91 @@ using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.FSM;
 
-namespace Monotheist
+namespace Monotheist.Human
 {
-    public class HumanNecessities: MonoBehaviour
+    public class HumanNeeds
     {
-        private StateMachineController _stateMachine;
+		private List<Need> _needList;
+		private List<Need> _unsatisfiedList;
+		private List<Need> _criticList;
+		
+		
+		public HumanNeeds(HumanConfig humanConfig)
+		{
+			_needList = new List<Need>();
+			_unsatisfiedList = new List<Need>();
+			_criticList = new List<Need>();
+			
+			_needList.Add(new Need(humanConfig.energyConfig));
+			_needList.Add(new Need(humanConfig.satiationConfig));
+
+			foreach(Need need in _needList)
+			{
+				need.Subscribe(UpdateNeedList);
+			}
+		}
+
+		public void Update()
+		{
+			foreach(Need need in _needList)
+			{
+				need.Update();
+			}
+		}
+
+		public Need GetUrgentNeed()
+		{
+			if(_criticList.Count > 0)
+			{
+				return GetUrgentNeedFromList(_criticList);
+			}
+			else if(_unsatisfiedList.Count > 0)
+			{
+				return GetUrgentNeedFromList(_unsatisfiedList);
+			}
+			else
+			{
+				return GetUrgentNeedFromList(_needList);
+			}
+		}
+
+		private Need GetUrgentNeedFromList(List<Need> list)
+		{
+			Need urgent = null;
+
+			foreach (Need need in list)
+			{
+				if (urgent == null) urgent = need;
+				else if (need.Satisfaction < urgent.Satisfaction) urgent = need;
+			}
+
+			return urgent;
+		}
+
+		private void UpdateNeedList(Need need)
+		{
+			switch (need.LastState)
+			{
+				case NeedStates.unsatisfied:
+					_unsatisfiedList.Remove(need);
+					break;
+				case NeedStates.critic:
+					_criticList.Remove(need);
+					break;	
+			}
+
+			switch (need.CurrentState)
+			{
+				case NeedStates.unsatisfied:
+					_unsatisfiedList.Add(need);
+					break;
+				case NeedStates.critic:
+					_criticList.Add(need);
+					break;
+			}
+		}
+		
+		/*private StateMachineController _stateMachine;
         private HumanConfig _config;
 
         private Transform _target;
@@ -150,6 +230,6 @@ namespace Monotheist
 				}
 			}
             return false;      
-		}
+		}*/
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Monotheist.Human
 {
@@ -9,20 +10,21 @@ namespace Monotheist.Human
         private NeedConfig _config;
 
         private float _satisfaction;
-        private ReactiveProperty<NeedStates> _currentState;
+        private NeedStates _currentState;
         private NeedStates _lastState;
+        private Action<Need> _stateChanged;
 
         private List<Interactable> _itemsList;
-        private ReactiveProperty<NeedItemStates> _currentListState;
+        private NeedItemStates _currentListState;
         private NeedItemStates _lastListState;
 
-
-        public ReactiveProperty<NeedStates> CurrentState => _currentState;
+        public float Satisfaction => _satisfaction;
+        public NeedStates CurrentState => _currentState;
         public NeedStates LastState => _lastState;
-        public ReactiveProperty<NeedItemStates> CurrentItemListState => _currentListState;
+        public NeedItemStates CurrentItemListState => _currentListState;
         public NeedItemStates LastItemListState => _lastListState;
 
-        public void Install(NeedConfig config)
+        public Need(NeedConfig config)
 		{
             _config = config;
 
@@ -61,8 +63,8 @@ namespace Monotheist.Human
         
         private void ChangeState(NeedStates newState)
 		{
-            _lastState = _currentState.Value;
-            _currentState.Value = newState;
+            _lastState = _currentState;
+            _currentState = newState;
 		}  
      
         private void CheckItemListState()
@@ -83,8 +85,9 @@ namespace Monotheist.Human
 
         private void ChangeItemListState(NeedItemStates newState)
 		{
-            _lastListState = _currentListState.Value;
-            _currentListState.Value = newState;
+            _lastListState = _currentListState;
+            _currentListState = newState;
+            _stateChanged.Invoke(this);
 		}
 
         public bool AddItem(Interactable item)
@@ -104,6 +107,11 @@ namespace Monotheist.Human
         public List<Interactable> GetItemsList()
 		{
             return _itemsList;
+		}
+
+        public void Subscribe(Action<Need> action)
+		{
+            _stateChanged += action;
 		}
     }
 }
