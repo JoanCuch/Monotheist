@@ -7,11 +7,10 @@ namespace Monotheist.FSM
 {
 	public abstract class ActionState : State
 	{
-		private Action<Type> _finished;
+		private Action<bool> _finished;
 
 		public virtual void Enter()
 		{
-
 		}
 
 		public virtual void Execute()
@@ -24,14 +23,14 @@ namespace Monotheist.FSM
 
 		}
 
-		public void Subscribe(Action<Type> action)
+		public void Subscribe(Action<bool> action)
 		{
 			_finished += action;
 		}
 
-		protected void Finish(Type nextType)
+		protected void Finish(bool completed)
 		{
-			_finished.Invoke(nextType);
+			_finished.Invoke(completed);
 		}
 	}
 }

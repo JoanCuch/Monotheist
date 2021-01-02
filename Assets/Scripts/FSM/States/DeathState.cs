@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace Monotheist.FSM {
 
-	public class DeathState : State
+	public class DeathState : GoalState
 	{
 		public override void Enter()
 		{
-			Debug.LogWarning(_model.owner.name + " has died. Rin in pepperoni");
-			GameObject.Destroy(_model.owner.gameObject);
+			//TODO implement Death
 		}
 
 		public override void Execute()

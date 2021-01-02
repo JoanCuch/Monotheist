@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace Monotheist.FSM
-{
-	public class StartState : State
+{/*
+	public class StartState : ActionState
 	{
 
 		public override void Enter()
@@ -21,5 +21,5 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 		}
-	}
+	}*/
 }

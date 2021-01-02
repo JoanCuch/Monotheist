@@ -376,9 +376,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 794087745}
+  - component: {fileID: 794087746}
   - component: {fileID: 794087744}
   - component: {fileID: 794087743}
-  - component: {fileID: 794087746}
   m_Layer: 0
   m_Name: Human
   m_TagString: Untagged
@@ -395,11 +395,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 794087742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a55cffab71d31489182f63d522e09c, type: 3}
+  m_Script: {fileID: 11500000, guid: 24f1b8d870c210749ab4c572dcb2b48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  human: {fileID: 794087744}
-  humanConfig: {fileID: 11400000, guid: 3524fcca0afc4574e8856b74144df89b, type: 2}
+  _humanConfig: {fileID: 11400000, guid: 3524fcca0afc4574e8856b74144df89b, type: 2}
+  _humanManager: {fileID: 794087744}
 --- !u!114 &794087744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,11 +409,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 794087742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc8af02ec5de1c84cad3e0751d0df1e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 04c6b24fead1752478e18124aa9cbd01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentEnergy: 0
-  _currentSatiation: 0
 --- !u!4 &794087745
 Transform:
   m_ObjectHideFlags: 0

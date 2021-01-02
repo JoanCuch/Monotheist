@@ -8,11 +8,12 @@ namespace Monotheist.FSM
 {   
     public class StateMachineController
     {
-        private List<State> _stateList;        
-        private State _currentState;
+        private List<GoalState> _stateList;        
+        private GoalState _currentState;
 
         public StateMachineController()
 		{
+            _stateList = new List<GoalState>();
             _stateList.Add(new WanderState());
             _stateList.Add(new ClaimState());
             _stateList.Add(new RecollectState());
@@ -21,7 +22,7 @@ namespace Monotheist.FSM
 
             ChangeState(typeof(WanderState));
 
-            foreach(State state in _stateList)
+            foreach(GoalState state in _stateList)
 			{
                 state.Subscribe(ChangeState);
 			}
@@ -29,9 +30,9 @@ namespace Monotheist.FSM
 
         public void ChangeState(Type newStateType)
 		{
-            State newState = null;
+            GoalState newState = null;
 
-            foreach(State state in _stateList)
+            foreach(GoalState state in _stateList)
 			{
                 if(state.GetType() == newStateType)
 				{

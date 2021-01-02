@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
 
-namespace Monotheist
+namespace Monotheist.Human
 {
 	[CreateAssetMenu(fileName = "HumanConfig")]
 	public class HumanConfig : ScriptableObject

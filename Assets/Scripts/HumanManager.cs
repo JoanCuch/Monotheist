@@ -18,8 +18,11 @@ namespace Monotheist.Human
 
         void Update()
         {
-            _needs.Update();
-            _stateMachine.Update();        
+            if (_needs != null && _stateMachine != null)
+            {
+                _needs.Update();
+                _stateMachine.Update();
+            }       
         }
 
         public void Install(HumanConfig config)

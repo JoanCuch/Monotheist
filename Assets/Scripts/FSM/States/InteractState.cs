@@ -4,9 +4,12 @@ using UnityEngine;
 
 namespace Monotheist.FSM
 {
-	public class InteractState : State
+	public class InteractState 
 	{
-		Interactable item;
+		//TODO interact state
+		/*Interactable item;
+
+
 		public override void Enter()
 		{
 			base.Execute();
@@ -34,6 +37,6 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			item = null;
-		}
+		}*/
 	}
 }

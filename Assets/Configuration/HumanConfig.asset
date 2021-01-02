@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e924367685f66bf468c3d23f5d5f013a, type: 3}
   m_Name: HumanConfig
   m_EditorClassIdentifier: 
+  energyConfig: {fileID: 11400000, guid: 69df8dec33759af4491c8d42d42bb561, type: 2}
+  satiationConfig: {fileID: 11400000, guid: d1f7856f9e24d1d47b7ea9826d2dc70f, type: 2}
   initialEnergy: 100
   energyTiredLimit: 50
   energyAwakeLimit: 95

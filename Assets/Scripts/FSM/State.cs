@@ -11,6 +11,5 @@ namespace Monotheist.FSM
         void Enter();
         void Execute();
         void Exit();
-        void Subscribe(Action<Type> action);
     }
 }

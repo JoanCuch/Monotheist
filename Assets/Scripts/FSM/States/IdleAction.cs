@@ -4,16 +4,18 @@ using UnityEngine;
 
 namespace Monotheist.FSM
 {
-	public class IdleState : State
+	public class IdleAction : ActionState
 	{
 		public override void Enter()
 		{
+			base.Enter();
 		}
 
 		public override void Execute()
 		{
 			base.Execute();
-			if(_model.owner.GetCurrentNecessity() != HumanConfig.Necessities.fullfilled)
+			
+			/*if(_model.owner.GetCurrentNecessity() != HumanConfig.Necessities.fullfilled)
 			{
 				Debug.Log("New necessity detected: " + _model.owner.GetCurrentNecessity().ToString());
 				_model.owner.SearchTarget(_model.owner.GetCurrentNecessity().ToString());
@@ -26,11 +28,12 @@ namespace Monotheist.FSM
 				{
 					Debug.Log("no target found");
 				}			
-			}
+			}*/
 		}
 
 		public override void Exit()
 		{
+			base.Exit();
 		}
 	}
 }

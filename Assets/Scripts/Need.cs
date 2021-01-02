@@ -87,7 +87,8 @@ namespace Monotheist.Human
 		{
             _lastListState = _currentListState;
             _currentListState = newState;
-            _stateChanged.Invoke(this);
+            if(_stateChanged != null)
+                _stateChanged.Invoke(this);
 		}
 
         public bool AddItem(Interactable item)
