@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Monotheist.Human;
 
 namespace Monotheist
 {
@@ -19,9 +20,10 @@ namespace Monotheist
         
         }
 
-        public override bool Interact(HumanNecessities human)
+        public override bool Interact(HumanNeeds human)
 		{
-            human.AddEnergy(_regenerationPerSecond * Time.deltaTime);
+            //TODO being able to add energy
+            //human.AddEnergy(_regenerationPerSecond * Time.deltaTime);
             return true;
 		}
     }

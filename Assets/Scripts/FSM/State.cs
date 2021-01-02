@@ -6,40 +6,11 @@ using System;
 
 namespace Monotheist.FSM
 {
-    public abstract class State
+    public interface State
     {
-        private Action<State> _changeStateEvent;
-        protected StateMachineModel _model;
-
-        public abstract void Enter();
-        public virtual void Execute()
-        {
-            if(_model.owner.GetCurrentNecessity() == HumanConfig.Necessities.dead)
-			{
-                ChangeState(_model.deathState);
-			}
-        }
-        public abstract void Exit();
-
-        public void Subscribe(Action<State> action)
-        {
-            _changeStateEvent += action;
-        }
-        protected void ChangeState(State newState)
-        {
-            if (newState == null)
-            {
-                Debug.LogWarning("Null newState");
-                return;
-            }
-
-            _changeStateEvent.Invoke(newState);
-        }
-
-        public void SetModel(StateMachineModel model)
-		{
-            _model = model;
-		}
-
+        void Enter();
+        void Execute();
+        void Exit();
+        void Subscribe(Action<Type> action);
     }
 }

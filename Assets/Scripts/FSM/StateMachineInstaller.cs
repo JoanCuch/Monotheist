@@ -6,7 +6,7 @@ using Monotheist;
 
 namespace Monotheist.FSM
 {
-    public class StateMachineInstaller : MonoBehaviour
+    /*public class StateMachineInstaller : MonoBehaviour
     {    
         public HumanNecessities human;
         public StateMachineModel model;
@@ -53,5 +53,5 @@ namespace Monotheist.FSM
 
             controller.ChangeState(model.startState);
         }
-    }
+    }*/
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Monotheist.Human;
 
 namespace Monotheist
 {
@@ -20,19 +21,20 @@ namespace Monotheist
 
         }
 
-        public override bool Interact(HumanNecessities human)
+        public override bool Interact(HumanNeeds human)
         {
             float nutrition = _nutritionPerSecond * Time.deltaTime;
             
             if(_totalNutrition >= nutrition)
 			{
-                human.AddSatiation(nutrition);
+                //TODO being able to change needs
+                //human.AddSatiation(nutrition);
                 _totalNutrition -= nutrition;
                 return true;
 			}
 			else
 			{
-                human.AddSatiation(_totalNutrition);
+                //human.AddSatiation(_totalNutrition);
                 Destroy(this.gameObject);
                 return false;
 			}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Monotheist.FSM
 {
-    public struct StateMachineModel
+    /*public struct StateMachineModel
     {
         public HumanNecessities owner;
         public WalkState walkState;
@@ -12,5 +12,5 @@ namespace Monotheist.FSM
         public IdleState idleState;
         public StartState startState;
         public DeathState deathState;
-    }
+    }*/
 }
