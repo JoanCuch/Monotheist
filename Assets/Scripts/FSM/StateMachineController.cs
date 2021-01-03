@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Monotheist.Human;
 
 
 namespace Monotheist.FSM
@@ -11,14 +12,14 @@ namespace Monotheist.FSM
         private List<GoalState> _stateList;        
         private GoalState _currentState;
 
-        public StateMachineController()
+        public StateMachineController(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner)
 		{
             _stateList = new List<GoalState>();
-            _stateList.Add(new WanderState());
-            _stateList.Add(new ClaimState());
-            _stateList.Add(new RecollectState());
-            _stateList.Add(new EatState());
-            _stateList.Add(new SleepState());
+            _stateList.Add(new WanderState(humanConfig, humanNeeds, owner));
+            _stateList.Add(new ClaimState(humanConfig, humanNeeds));
+            _stateList.Add(new RecollectState(humanConfig, humanNeeds));
+            _stateList.Add(new EatState(humanConfig, humanNeeds));
+            _stateList.Add(new SleepState(humanConfig, humanNeeds));
 
             ChangeState(typeof(WanderState));
 

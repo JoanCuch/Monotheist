@@ -8,12 +8,13 @@ namespace Monotheist.FSM {
 	public class WalkAction : ActionState
 	{	
 		private HumanConfig _humanConfig;
-		private Transform _target;
+		private Vector3 _target;
 		private Transform _owner;
 		
-		public WalkAction(HumanConfig humanConfig)
+		public WalkAction(HumanConfig humanConfig, Transform owner) : base(ActionTags.walk)
 		{
 			_humanConfig = humanConfig;
+			_owner = owner;
 		}
 		
 		public override void Enter()
@@ -29,13 +30,13 @@ namespace Monotheist.FSM {
 			{
 				Finish(false);
 			}
-			else if (Vector2.Distance(_target.position, _owner.position) <= _humanConfig.interactRange)
+			else if (Vector2.Distance(_target, _owner.position) <= _humanConfig.interactRange)
 			{
 				Finish(true);
 			}
 			else
 			{
-				_owner.position = Vector2.MoveTowards(_owner.position, _target.position, _humanConfig.velocity * Time.deltaTime);
+				_owner.position = Vector2.MoveTowards(_owner.position, _target, _humanConfig.velocity * Time.deltaTime);
 			}
 		}
 
@@ -43,5 +44,7 @@ namespace Monotheist.FSM {
 		{
 			base.Exit();
 		}
+
+		public void SetTarget(Vector3 newTarget) { _target = newTarget; }
 	}
 }

@@ -28,7 +28,7 @@ namespace Monotheist.Human
         public void Install(HumanConfig config)
 		{
             _needs = new HumanNeeds(config);
-            _stateMachine = new StateMachineController();
+            _stateMachine = new StateMachineController(config, _needs, transform);
 		}
     }
 }

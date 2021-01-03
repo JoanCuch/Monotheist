@@ -6,34 +6,33 @@ namespace Monotheist.FSM
 {
 	public class IdleAction : ActionState
 	{
+		private float _timer;
+
+		public IdleAction() : base(ActionTags.idle)
+		{
+		}
+
+
 		public override void Enter()
 		{
-			base.Enter();
+			base.Enter();			
+			_timer = 1;
 		}
 
 		public override void Execute()
 		{
 			base.Execute();
-			
-			/*if(_model.owner.GetCurrentNecessity() != HumanConfig.Necessities.fullfilled)
-			{
-				Debug.Log("New necessity detected: " + _model.owner.GetCurrentNecessity().ToString());
-				_model.owner.SearchTarget(_model.owner.GetCurrentNecessity().ToString());
 
-				if (_model.owner.Target != null)
-				{
-					ChangeState(_model.walkState);					
-				}
-				else
-				{
-					Debug.Log("no target found");
-				}			
-			}*/
+			_timer += -1 * Time.deltaTime;
+
+			if (_timer <= 0) Finish(true);
 		}
 
 		public override void Exit()
 		{
 			base.Exit();
 		}
+
+		public void SetTimer(float newTimer) { _timer = newTimer; }
 	}
 }

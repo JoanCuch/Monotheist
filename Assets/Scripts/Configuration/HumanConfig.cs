@@ -35,5 +35,9 @@ namespace Monotheist.Human
 		public float velocity;
 		public float interactRange;
 		public float searchRange;
+
+		//WanderState
+		public float idleTime;
+		public float wanderRange;
 	}
 }

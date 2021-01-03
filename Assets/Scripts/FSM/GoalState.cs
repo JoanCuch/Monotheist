@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Monotheist.Human;
 
 namespace Monotheist.FSM {
 
@@ -13,10 +14,15 @@ namespace Monotheist.FSM {
 		protected ActionState _currentAction;
 		protected int _currentActionIndex;
 
-		public GoalState()
+		protected HumanNeeds _humanNeeds;
+		protected HumanConfig _humanConfig;
+
+		public GoalState(HumanConfig humanConfig, HumanNeeds humanNeeds)
 		{
 			_actionList = new List<ActionState>();
 			_currentActionIndex = 0;
+			_humanNeeds = humanNeeds;
+			_humanConfig = humanConfig;
 		}
 
 		public virtual void Enter()
@@ -73,19 +79,13 @@ namespace Monotheist.FSM {
 		}
 
 
-		protected void ChangeAction(Type newActionType)
+		protected void ChangeAction(ActionTags newActionTag)
 		{
-			if(newActionType == null)
-			{
-				Debug.LogWarning("null type on GoalState");
-				return;
-			}
-
 			ActionState newAction = null;
 
 			foreach (ActionState action in _actionList)
 			{
-				if (action.GetType() == newActionType)
+				if (action.Tag == newActionTag)
 				{
 					newAction = action;
 					break;

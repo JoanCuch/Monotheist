@@ -7,7 +7,14 @@ namespace Monotheist.FSM
 {
 	public abstract class ActionState : State
 	{
+		public readonly ActionTags Tag;
+			
 		private Action<bool> _finished;
+
+		public ActionState(ActionTags tag)
+		{
+			Tag = tag;
+		}
 
 		public virtual void Enter()
 		{
