@@ -78,7 +78,6 @@ namespace Monotheist.FSM {
 			_finished.Invoke(nextType);
 		}
 
-
 		protected void ChangeAction(ActionTags newActionTag)
 		{
 			ActionState newAction = null;

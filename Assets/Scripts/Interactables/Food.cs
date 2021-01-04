@@ -21,7 +21,12 @@ namespace Monotheist
 
         }
 
-        public override bool Interact(HumanNeeds human)
+        /// <summary>
+        /// Interact with the humanNeeds class and returns false when the object cannot interact any more.
+        /// </summary>
+        /// <param name="humanNeeds"></param>
+        /// <returns></returns>
+        public override bool Interact(HumanNeeds humanNeeds)
         {
             float nutrition = _nutritionPerSecond * Time.deltaTime;
             

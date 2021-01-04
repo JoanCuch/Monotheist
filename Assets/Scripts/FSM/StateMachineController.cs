@@ -12,13 +12,16 @@ namespace Monotheist.FSM
         private List<GoalState> _stateList;        
         private GoalState _currentState;
 
+        private HumanNeeds _humanNeeds;
+        private HumanConfig _humanConfig;
+
         public StateMachineController(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner)
 		{
             _stateList = new List<GoalState>();
             _stateList.Add(new WanderState(humanConfig, humanNeeds, owner));
             _stateList.Add(new ClaimState(humanConfig, humanNeeds));
             _stateList.Add(new RecollectState(humanConfig, humanNeeds));
-            _stateList.Add(new EatState(humanConfig, humanNeeds));
+            _stateList.Add(new EatState(humanConfig, humanNeeds, owner));
             _stateList.Add(new SleepState(humanConfig, humanNeeds));
 
             ChangeState(typeof(WanderState));
@@ -27,7 +30,15 @@ namespace Monotheist.FSM
 			{
                 state.Subscribe(ChangeState);
 			}
+
+            _humanConfig = humanConfig;
+            _humanNeeds = humanNeeds;
 		}
+
+        public void Update()
+        {
+            if (_currentState != null) _currentState.Execute();
+        }
 
         public void ChangeState(Type newStateType)
 		{
@@ -65,9 +76,6 @@ namespace Monotheist.FSM
             }
 		}
 
-        public void Update()
-		{
-            if (_currentState != null) _currentState.Execute();
-		}
+        
     }
 }
