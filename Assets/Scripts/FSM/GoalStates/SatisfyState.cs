@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Monotheist.FSM
 {
-	public class EatState : GoalState
+	public class SatisfyState : GoalState
 	{
 		Transform _owner;
 		Interactable _currentTarget;
 		Need _currentNeed;
 
-		public EatState(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds)
+		public SatisfyState(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds)
 		{
 			_owner = owner;
 
@@ -87,7 +87,7 @@ namespace Monotheist.FSM
 					if (completed)
 					{
 						ChangeAction(ActionTags.interact);
-						((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
+						((InteractAction)_currentAction).
 					}
 					else
 					{

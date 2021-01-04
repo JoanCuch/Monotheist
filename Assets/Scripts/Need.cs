@@ -23,6 +23,7 @@ namespace Monotheist.Human
         public NeedStates LastState => _lastState;
         public NeedItemStates CurrentItemListState => _currentListState;
         public NeedItemStates LastItemListState => _lastListState;
+        public NeedConfig NeedConfig => _config;
 
         public Need(NeedConfig config)
 		{

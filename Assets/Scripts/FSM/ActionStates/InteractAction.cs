@@ -9,7 +9,6 @@ namespace Monotheist.FSM
 	{
 		HumanNeeds _humanNeeds;
 		HumanConfig _humanConfig;
-		Need _need;
 		Transform _owner;
 		Interactable _target;
 
@@ -29,7 +28,7 @@ namespace Monotheist.FSM
 		{
 			base.Execute();
 
-			if (_need != null)
+			if (_target != null)
 			{
 				if (Vector3.Distance(_target.transform.position, _owner.position) >= _humanConfig.interactRange)
 				{
@@ -47,8 +46,12 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			base.Exit();
-			_need = null;
 			_target = null;
+		}
+
+		public void SetTarget(Interactable target)
+		{
+			_target = target;
 		}
 	}
 }

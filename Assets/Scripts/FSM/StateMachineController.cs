@@ -21,7 +21,7 @@ namespace Monotheist.FSM
             _stateList.Add(new WanderState(humanConfig, humanNeeds, owner));
             _stateList.Add(new ClaimState(humanConfig, humanNeeds));
             _stateList.Add(new RecollectState(humanConfig, humanNeeds));
-            _stateList.Add(new EatState(humanConfig, humanNeeds, owner));
+            _stateList.Add(new SatisfyState(humanConfig, humanNeeds, owner));
             _stateList.Add(new SleepState(humanConfig, humanNeeds));
 
             ChangeState(typeof(WanderState));
