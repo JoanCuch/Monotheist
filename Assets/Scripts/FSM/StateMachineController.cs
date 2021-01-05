@@ -19,12 +19,13 @@ namespace Monotheist.FSM
 		{
             _stateList = new List<GoalState>();
             _stateList.Add(new WanderState(humanConfig, humanNeeds, owner));
-            _stateList.Add(new ClaimState(humanConfig, humanNeeds));
-            _stateList.Add(new RecollectState(humanConfig, humanNeeds));
+            _stateList.Add(new ClaimState(humanConfig, humanNeeds, owner));
+            _stateList.Add(new RecollectState(humanConfig, humanNeeds, owner));
             _stateList.Add(new SatisfyState(humanConfig, humanNeeds, owner));
-            _stateList.Add(new SleepState(humanConfig, humanNeeds));
+            _stateList.Add(new StartState(humanConfig, humanNeeds));
+            _stateList.Add(new DeathState(humanNeeds, humanConfig, owner));
 
-            ChangeState(typeof(WanderState));
+            ChangeState(typeof(StartState));
 
             foreach(GoalState state in _stateList)
 			{
@@ -37,6 +38,25 @@ namespace Monotheist.FSM
 
         public void Update()
         {
+            Need currentNeed = _humanNeeds.GetUrgentNeed();
+            
+            if(currentNeed.CurrentState == NeedStates.lethal)
+			{
+                ChangeState(typeof(DeathState));
+			}
+            else if(currentNeed.CurrentState != NeedStates.satisfied)
+			{
+                ChangeState(typeof(SatisfyState));
+			}
+            else if(currentNeed.CurrentItemListState != NeedItemStates.satisfied)
+			{
+                ChangeState(typeof(RecollectState));
+			}
+			else if(_currentState.GetType() != typeof(WanderState))
+			{
+                ChangeState(typeof(WanderState));
+			}
+                         
             if (_currentState != null) _currentState.Execute();
         }
 
@@ -74,8 +94,6 @@ namespace Monotheist.FSM
             {
                 _currentState.Enter();
             }
-		}
-
-        
+		}    
     }
 }

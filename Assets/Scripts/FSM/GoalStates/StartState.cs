@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿using Monotheist.Human;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Monotheist.FSM
-{/*
-	public class StartState : ActionState
+{
+	public class StartState : GoalState
 	{
+		public StartState(HumanConfig humanConfig, HumanNeeds humanNeeds) : base(humanConfig, humanNeeds)
+		{
+		}
 
 		public override void Enter()
 		{
@@ -15,11 +19,11 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
-			ChangeState(_model.idleState);
+			Finish(typeof(WanderState));
 		}
 
 		public override void Exit()
 		{
 		}
-	}*/
+	}
 }
