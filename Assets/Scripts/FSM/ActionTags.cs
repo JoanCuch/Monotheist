@@ -11,7 +11,8 @@ namespace Monotheist.FSM
         interact,
         drag,
         drop,
-        claim
+        claim,
+        die
     }
 
     public enum GoalTags

@@ -25,3 +25,5 @@ MonoBehaviour:
   velocity: 5
   interactRange: 1
   searchRange: 1000000
+  idleTime: 3
+  wanderRange: 20

@@ -7,17 +7,20 @@ namespace Monotheist.FSM {
 
 	public class DeathState : GoalState
 	{
-		public DeathState(HumanNeeds humanNeeds, HumanConfig humanConfig) : base(humanConfig, humanNeeds)
+		public DeathState(HumanNeeds humanNeeds, HumanConfig humanConfig, Transform owner) : base(humanConfig, humanNeeds)
 		{
+
+			_actionList.Add(new DieAction(owner));
 		}
 
 		public override void Enter()
 		{
-			//TODO implement Death
+			ChangeAction(ActionTags.die);
 		}
 
 		public override void Execute()
 		{
+			
 		}
 
 		public override void Exit()
