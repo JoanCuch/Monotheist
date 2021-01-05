@@ -70,7 +70,7 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			base.Exit();
-
+			_currentNeed = null;
 			_currentAction = null;
 			_currentTarget = null;
 		}
@@ -87,13 +87,18 @@ namespace Monotheist.FSM
 					if (completed)
 					{
 						ChangeAction(ActionTags.interact);
-						((InteractAction)_currentAction).
+						((InteractAction)_currentAction).SetTarget(_currentTarget);
 					}
 					else
 					{
 						Finish(typeof(WanderState));
 					}
 					break;
+				default:
+					Debug.LogWarning("Defualt on switch");
+					Finish(typeof(WanderState));
+					break;
+
 			}
 		}
 

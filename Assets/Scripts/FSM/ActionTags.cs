@@ -9,7 +9,7 @@ namespace Monotheist.FSM
         idle,
         walk,
         interact,
-        collect,
+        drag,
         drop,
         claim
     }

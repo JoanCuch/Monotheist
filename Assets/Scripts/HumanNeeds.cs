@@ -5,13 +5,16 @@ using Monotheist.FSM;
 
 namespace Monotheist.Human
 {
-    public class HumanNeeds
-    {
+	public class HumanNeeds
+	{
 		private List<Need> _needList;
 		private List<Need> _unsatisfiedList;
 		private List<Need> _criticList;
-		
-		
+
+		//This should not be here
+		private Interactable _dragObject;
+		[SerializeField]private Vector3 _homePosition;
+
 		public HumanNeeds(HumanConfig humanConfig)
 		{
 			_needList = new List<Need>();
@@ -51,6 +54,12 @@ namespace Monotheist.Human
 			}
 		}
 
+		public Need GetUrgentItemsNeed()
+		{
+			//TODO get need that requires objects
+			return GetUrgentNeed();
+		}
+
 		private Need GetUrgentNeedFromList(List<Need> list)
 		{
 			Need urgent = null;
@@ -86,7 +95,28 @@ namespace Monotheist.Human
 					break;
 			}
 		}
-		
+
+		public Interactable GetDragObject()
+		{
+			_dragObject = null;
+			return _dragObject;
+		}
+
+		public bool SetDragObject(Interactable dragObject)
+		{
+			if(_dragObject == null)
+			{
+				_dragObject = dragObject;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public Vector3 HomePosition => _homePosition;
+
 		/*private StateMachineController _stateMachine;
         private HumanConfig _config;
 
@@ -231,5 +261,5 @@ namespace Monotheist.Human
 			}
             return false;      
 		}*/
-    }
+	}
 }
