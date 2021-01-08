@@ -12,6 +12,7 @@ namespace Monotheist.FSM
 		public WanderState(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds)
 		{
 			_owner = owner;
+			_actionList = new List<ActionState>();
 			_actionList.Add(new IdleAction());
 			_actionList.Add(new WalkAction(humanConfig, owner));
 
@@ -24,7 +25,7 @@ namespace Monotheist.FSM
 		public override void Enter()
 		{
 			base.Enter();
-
+			Debug.Log("enter wander");
 			ChangeAction(ActionTags.idle);
 			((IdleAction)_currentAction).SetTimer(_humanConfig.idleTime);
 		}

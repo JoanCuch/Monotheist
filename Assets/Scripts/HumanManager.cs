@@ -10,7 +10,7 @@ namespace Monotheist.Human
     {
         StateMachineController _stateMachine;
         HumanNeeds _needs;
-    
+
         void Start()
         {
 
@@ -27,6 +27,7 @@ namespace Monotheist.Human
 
         public void Install(HumanConfig config)
 		{
+            Debug.Log("intall");
             _needs = new HumanNeeds(config);
             _stateMachine = new StateMachineController(config, _needs, transform);
 		}

@@ -17,11 +17,11 @@ MonoBehaviour:
   initialEnergy: 100
   energyTiredLimit: 50
   energyAwakeLimit: 95
-  energyReductionPerSecond: 1
+  energyReductionPerSecond: 0
   initialSatiation: 100
   satiationHungryLimit: 50
   satiationSatiatedLimit: 95
-  satiationReductionPerSecond: 3
+  satiationReductionPerSecond: 0
   velocity: 5
   interactRange: 1
   searchRange: 1000000

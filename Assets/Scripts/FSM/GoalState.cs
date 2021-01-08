@@ -75,11 +75,14 @@ namespace Monotheist.FSM {
 
 		protected void Finish(Type nextType)
 		{
+			Debug.Log("finish " + nextType);
 			_finished.Invoke(nextType);
 		}
 
 		protected void ChangeAction(ActionTags newActionTag)
 		{
+			Debug.Log("new action " + newActionTag);
+
 			ActionState newAction = null;
 
 			foreach (ActionState action in _actionList)
@@ -98,21 +101,18 @@ namespace Monotheist.FSM {
 			}
 			else
 			{
-				Debug.Log("Change action: " + newAction);
-			}
+				if (_currentAction != null)
+				{
+					_currentAction.Exit();
+				}
 
+				_currentAction = newAction;
 
-			if (_currentAction != null)
-			{
-				_currentAction.Exit();
-			}
-
-			_currentAction = newAction;
-
-			if (_currentAction != null)
-			{
-				_currentAction.Enter();
-			}
+				if (_currentAction != null)
+				{
+					_currentAction.Enter();
+				}
+			}		
 		}	
 	}
 }

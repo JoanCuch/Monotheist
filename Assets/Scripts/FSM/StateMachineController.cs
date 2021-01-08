@@ -14,6 +14,7 @@ namespace Monotheist.FSM
 
         private HumanNeeds _humanNeeds;
         private HumanConfig _humanConfig;
+        private Transform _owner;
 
         public StateMachineController(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner)
 		{
@@ -25,8 +26,6 @@ namespace Monotheist.FSM
             _stateList.Add(new StartState(humanConfig, humanNeeds));
             _stateList.Add(new DeathState(humanNeeds, humanConfig, owner));
 
-            ChangeState(typeof(StartState));
-
             foreach(GoalState state in _stateList)
 			{
                 state.Subscribe(ChangeState);
@@ -34,13 +33,16 @@ namespace Monotheist.FSM
 
             _humanConfig = humanConfig;
             _humanNeeds = humanNeeds;
-		}
+            _owner = owner;
+
+            ChangeState(typeof(StartState));
+        }
 
         public void Update()
         {
             Need currentNeed = _humanNeeds.GetUrgentNeed();
             
-            if(currentNeed.CurrentState == NeedStates.lethal)
+            /*if(currentNeed.CurrentState == NeedStates.lethal)
 			{
                 ChangeState(typeof(DeathState));
 			}
@@ -55,13 +57,13 @@ namespace Monotheist.FSM
 			else if(_currentState.GetType() != typeof(WanderState))
 			{
                 ChangeState(typeof(WanderState));
-			}
-                         
+			}*/
+                                 
             if (_currentState != null) _currentState.Execute();
         }
 
         public void ChangeState(Type newStateType)
-		{
+		{                     
             GoalState newState = null;
 
             foreach(GoalState state in _stateList)
@@ -75,25 +77,24 @@ namespace Monotheist.FSM
 
             if (newState == null)
             {
-                Debug.LogWarning("Error 404, state not found");
-                return;
+                Debug.LogWarning("Error 404, state not found");               
             }
             else
             {
                 Debug.Log("Change state: " + newState);
-            }
 
-            if (_currentState != null)
-			{
-                _currentState.Exit();
-			}
+                if (_currentState != null)
+                {
+                    _currentState.Exit();
+                }
 
-            _currentState = newState;
+                _currentState = newState;
 
-            if (_currentState != null)
-            {
-                _currentState.Enter();
-            }
-		}    
-    }
+                if (_currentState != null)
+                {
+                    _currentState.Enter();
+                }
+            }           
+		}       
+    }   
 }

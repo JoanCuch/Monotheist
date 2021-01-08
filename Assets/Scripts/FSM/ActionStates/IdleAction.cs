@@ -22,7 +22,6 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
-
 			_timer += -1 * Time.deltaTime;
 
 			if (_timer <= 0) Finish(true);

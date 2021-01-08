@@ -42,7 +42,7 @@ namespace Monotheist.FSM
 			}
 			else
 			{
-				_currentTarget = SearchTarget(_currentNeed);
+				_currentTarget = Utils.SearchInteractable(_owner.position, _humanConfig.searchRange, _currentNeed.Tag);
 
 				if (_currentTarget == null)
 				{
@@ -95,41 +95,6 @@ namespace Monotheist.FSM
 					}
 					break;
 			}
-		}
-
-		private Interactable SearchTarget(Need _need)
-		{
-			//Search for the acceptable objects around
-			Collider2D[] colliders = Physics2D.OverlapCircleAll(_owner.position, _humanConfig.searchRange);
-
-			List<Interactable> _targetList = _need.GetItemsList();
-
-			string needTag = _humanNeeds.GetUrgentNeed().NeedConfig.tag;
-
-			foreach (Collider2D collider in colliders)
-			{
-				if(collider.tag == needTag)
-				{
-					_targetList.Add(collider.GetComponent<Interactable>());
-				}
-			}
-			
-			//From the around objects, go to the nearest
-			Interactable target = null;
-
-			float minDistance = Mathf.Infinity;
-
-			foreach (Interactable inter in _targetList)
-			{
-				float distance = Vector3.Distance(inter.transform.position, _owner.position);
-
-				if (distance < minDistance)
-				{
-					minDistance = distance;
-					target = inter;
-				}
-			}
-			return target;
 		}
 	}
 }

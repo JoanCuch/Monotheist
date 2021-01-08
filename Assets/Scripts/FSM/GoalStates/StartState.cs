@@ -19,6 +19,7 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
+			Debug.Log("start");
 			Finish(typeof(WanderState));
 		}
 

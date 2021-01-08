@@ -24,6 +24,7 @@ namespace Monotheist.Human
         public NeedItemStates CurrentItemListState => _currentListState;
         public NeedItemStates LastItemListState => _lastListState;
         public NeedConfig NeedConfig => _config;
+        public string Tag => _config.tag;
 
         public Need(NeedConfig config)
 		{
@@ -38,9 +39,19 @@ namespace Monotheist.Human
 
         public void Update()
 		{
-            _satisfaction += -1 * _config.satisfactionReductionPerSecond;
+            if (_satisfaction > _config.satisfactionMin)
+            {
+                _satisfaction += -1 * _config.satisfactionReductionPerSecond * Time.deltaTime;
+            }
             CheckState();
-		}
+
+
+            Debug.LogWarning(_config.tag + ": " + _satisfaction + " " + _currentState);
+            Debug.LogWarning(_config.tag + ": " + _itemsList.Count+ " " + _currentListState);
+
+
+
+        }
 
         private void CheckState()
 		{

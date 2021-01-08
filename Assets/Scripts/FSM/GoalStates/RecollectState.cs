@@ -36,10 +36,12 @@ namespace Monotheist.FSM
 
 			if(_currentNeed == null)
 			{
+				Debug.LogWarning("current need null");
 				Finish(typeof(WanderState));
 			}
 			else if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
+				Debug.LogWarning("current list satisfied");
 				Finish(typeof(WanderState));
 			}
 			else
@@ -55,6 +57,7 @@ namespace Monotheist.FSM
 
 			if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
+				Debug.LogWarning("current satisifed");
 				Finish(typeof(WanderState));
 			}
 
@@ -126,7 +129,7 @@ namespace Monotheist.FSM
 			}
 		}
 
-		private Interactable SearchTarget(Need _need)
+		/*private Interactable SearchTarget(Need _need)
 		{
 			List<Interactable> _targetList = _need.GetItemsList();
 			Interactable target = null;
@@ -144,14 +147,15 @@ namespace Monotheist.FSM
 				}
 			}
 			return target;
-		}
+		}*/
 
 		private void SelectTargetAndWalk()
 		{
-			_currentTarget = SearchTarget(_currentNeed);
+			_currentTarget = Utils.SearchInteractable(_owner.position, _humanConfig.searchRange, _currentNeed.Tag);
 
 			if (_currentTarget == null)
 			{
+				Debug.LogWarning("current target null");
 				Finish(typeof(WanderState));
 			}
 			else

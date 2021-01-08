@@ -13,7 +13,6 @@ namespace Monotheist.Human
 
 		//This should not be here
 		private Interactable _dragObject;
-		[SerializeField]private Vector3 _homePosition;
 
 		public HumanNeeds(HumanConfig humanConfig)
 		{
@@ -115,6 +114,6 @@ namespace Monotheist.Human
 			}
 		}
 
-		public Vector3 HomePosition => _homePosition;		
+		public Vector3 HomePosition => Vector3.zero;		
 	}
 }
