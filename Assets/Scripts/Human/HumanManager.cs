@@ -25,11 +25,12 @@ namespace Monotheist.Human
             }       
         }
 
-        public void Install(HumanConfig config)
+        public void Install(HumanConfig config, HumanStatsSpy humanStatsSpy)
 		{
             Debug.Log("intall");
             _needs = new HumanNeeds(config);
             _stateMachine = new StateMachineController(config, _needs, transform);
+            humanStatsSpy.Configurate(_needs, _stateMachine);
 		}
     }
 }

@@ -61,7 +61,7 @@ namespace Monotheist.FSM
 		{
 			base.Execute();
 
-			if (_currentNeed.CurrentState == NeedStates.satisfied)
+			if (_currentNeed.CurrentStateValue == NeedStates.satisfied)
 			{
 				Finish(typeof(WanderState));
 			}

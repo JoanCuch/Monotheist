@@ -9,6 +9,7 @@ namespace Monotheist.FSM {
 	public abstract class GoalState : State
 	{
 		private Action<Type> _finished;
+		private Action<ActionState> _changedActionState;
 
 		protected List<ActionState> _actionList;
 		protected ActionState _currentAction;
@@ -16,6 +17,7 @@ namespace Monotheist.FSM {
 
 		protected HumanNeeds _humanNeeds;
 		protected HumanConfig _humanConfig;
+
 
 		public GoalState(HumanConfig humanConfig, HumanNeeds humanNeeds)
 		{
@@ -50,28 +52,7 @@ namespace Monotheist.FSM {
 			_finished += action;
 		}
 
-		/*public void NextAction()
-		{		
-			if(_currentAction!= null)
-			{
-				_currentAction.Exit();
-			}
-
-			_currentActionIndex++;
-			if(_currentActionIndex < _actionList.Count)
-			{
-				_currentAction = _actionList[_currentActionIndex];
-
-				if (_currentAction != null)
-				{
-					_currentAction.Enter();
-				}
-			}
-			else
-			{
-
-			}		
-		}*/
+		
 
 		protected void Finish(Type nextType)
 		{
@@ -107,12 +88,23 @@ namespace Monotheist.FSM {
 				}
 
 				_currentAction = newAction;
-
+				
 				if (_currentAction != null)
 				{
 					_currentAction.Enter();
+					if (_changedActionState != null) _changedActionState.Invoke(newAction);
 				}
 			}		
 		}	
+	
+		public void SubscribeActionChange(Action<ActionState> action)
+		{
+			_changedActionState += action;
+		}
+
+		public void UnsubscribeActionChange(Action<ActionState> action)
+		{
+			_changedActionState -= action;
+		}
 	}
 }

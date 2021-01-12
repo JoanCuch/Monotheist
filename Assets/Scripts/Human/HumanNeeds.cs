@@ -66,7 +66,7 @@ namespace Monotheist.Human
 			foreach (Need need in list)
 			{
 				if (urgent == null) urgent = need;
-				else if (need.Satisfaction < urgent.Satisfaction) urgent = need;
+				else if (need.SatisfactionValue < urgent.SatisfactionValue) urgent = need;
 			}
 
 			return urgent;
@@ -74,7 +74,7 @@ namespace Monotheist.Human
 
 		private void UpdateNeedList(Need need)
 		{
-			switch (need.LastState)
+			switch (need.LastStateValue)
 			{
 				case NeedStates.unsatisfied:
 					_unsatisfiedList.Remove(need);
@@ -84,7 +84,7 @@ namespace Monotheist.Human
 					break;	
 			}
 
-			switch (need.CurrentState)
+			switch (need.CurrentStateValue)
 			{
 				case NeedStates.unsatisfied:
 					_unsatisfiedList.Add(need);
@@ -114,6 +114,8 @@ namespace Monotheist.Human
 			}
 		}
 
-		public Vector3 HomePosition => Vector3.zero;		
+		public Vector3 HomePosition => Vector3.zero;
+
+		public List<Need> NeedList => _needList;
 	}
 }

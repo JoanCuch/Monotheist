@@ -8,11 +8,12 @@ namespace Monotheist.Human
     {
         [SerializeField] private HumanConfig _humanConfig;
         [SerializeField] private HumanManager _humanManager;
+        [SerializeField] private HumanStatsSpy _humanStatsSpy;
 
 
         void Start()
         {
-            _humanManager.Install(_humanConfig);
+            _humanManager.Install(_humanConfig, _humanStatsSpy);
         }
 
         void Update()

@@ -17,7 +17,10 @@ namespace Monotheist
 			set
 			{
 				_value = value;
-				_action.Invoke(value);
+				if (_action != null)
+				{
+					_action.Invoke(value);
+				}
 			}
 		}
 
@@ -29,6 +32,11 @@ namespace Monotheist
 		public void Subscribe(Action<T> action)
 		{
 			_action += action;
+		}
+
+		public void Unsubscribe(Action<T> action)
+		{
+			_action -= action;
 		}
 
 		public void SetValueWithoutReaction(T value)

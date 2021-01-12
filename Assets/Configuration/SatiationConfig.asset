@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SatiationConfig
   m_EditorClassIdentifier: 
   satisfactionInitial: 100
-  satisfactionReductionPerSecond: 1
+  satisfactionReductionPerSecond: 0
   tag: satiation
   satisfactionMax: 100
   satisfactionUnsatisfiedLevel: 70

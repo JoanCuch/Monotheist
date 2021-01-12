@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnergyConfig
   m_EditorClassIdentifier: 
   satisfactionInitial: 100
-  satisfactionReductionPerSecond: 1
+  satisfactionReductionPerSecond: 2
   tag: energy
   satisfactionMax: 100
   satisfactionUnsatisfiedLevel: 70
