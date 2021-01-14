@@ -18,17 +18,13 @@ namespace Monotheist
 
         public override bool Interact(HumanNeeds humanNeeds)
 		{
-            Need need = humanNeeds.GetNeed(_tag);
+            Need need = humanNeeds.GetNeed(tag);
 
-            if (need == null)
-            {
-                return false;
-            }
-            else
-            {
-                need.AddSatisfaction(_regenerationPerSecond * Time.deltaTime);
-                return true;
-            }
+            Assert.IsNotNull(need);
+            
+            need.AddSatisfaction(_regenerationPerSecond * Time.deltaTime);
+            return true;
+            
 		}
     }
 }

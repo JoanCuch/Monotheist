@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
+using UnityEngine.Assertions;
 
 namespace Monotheist
 {
@@ -9,12 +10,6 @@ namespace Monotheist
     {
         [SerializeField] private float _nutritionPerSecond;
         [SerializeField] private float _totalNutrition;
-
-
-		void Start()
-        {
-
-        }
 
         void Update()
         {
@@ -29,17 +24,20 @@ namespace Monotheist
         public override bool Interact(HumanNeeds humanNeeds)
         {
             float nutrition = _nutritionPerSecond * Time.deltaTime;
-            
+
+            Need need = humanNeeds.GetNeed(tag);
+
+            Assert.IsNotNull(need);
+
             if(_totalNutrition >= nutrition)
 			{
-                //TODO being able to change needs
-                //human.AddSatiation(nutrition);
+                need.AddSatisfaction(nutrition * Time.deltaTime);
                 _totalNutrition -= nutrition;
                 return true;
 			}
 			else
 			{
-                //human.AddSatiation(_totalNutrition);
+                need.AddSatisfaction(nutrition * Time.deltaTime);
                 Destroy(this.gameObject);
                 return false;
 			}

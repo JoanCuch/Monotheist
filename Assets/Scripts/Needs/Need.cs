@@ -121,11 +121,17 @@ namespace Monotheist.Human
 			else
 			{
                 _itemsList.Value.Add(item);
+                item.SubscribeOnDestroy(RemoveItem);
                 _listCount.Value = _itemsList.Value.Count;
                 CheckItemListState();
                 return true;
 			}
         }
+
+        public void RemoveItem(Interactable item)
+		{
+            _itemsList.Value.Remove(item);
+		}
 
         public void AddSatisfaction(float extraSatisfaction)
 		{
@@ -142,5 +148,7 @@ namespace Monotheist.Human
 		{
             _stateChanged += action;            
 		}
+
+        
     }
 }

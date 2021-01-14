@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
@@ -59,12 +60,15 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			base.Execute();
-
+			Assert.IsNotNull(_currentNeed);
 			if (_currentNeed.CurrentState == NeedStates.fullfilled)
 			{
 				Finish(typeof(WanderState));
 			}
+			else
+			{
+				base.Execute();
+			}		
 		}
 
 		public override void Exit()

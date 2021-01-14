@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
 using UnityEngine.Assertions;
+using System;
 
 namespace Monotheist
 {
     public abstract class Interactable : MonoBehaviour
     {
         [SerializeField] protected bool _hasOwner;
-        [SerializeField] protected string _tag;
 
-		public void Start()
+        private Action<Interactable> onDestroy;
+
+		void Start()
 		{
-            Assert.AreNotEqual(_tag.Length, 0, name + "has an empty tag");
         }
 
 
@@ -31,5 +32,15 @@ namespace Monotheist
                 return true;
             }
         }
-    }
+
+        public void SubscribeOnDestroy(Action<Interactable> action)
+		{
+            onDestroy += action;
+		}
+
+		private void OnDestroy()
+		{
+            if(onDestroy != null)onDestroy.Invoke(this);
+		}
+	}
 }

@@ -33,7 +33,7 @@ namespace Monotheist.FSM {
 		}
 
 		public virtual void Execute()
-		{
+		{		
 			if(_currentAction == null)
 			{
 				Debug.LogWarning("Null current action");
