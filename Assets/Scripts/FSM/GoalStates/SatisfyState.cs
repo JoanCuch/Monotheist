@@ -28,7 +28,7 @@ namespace Monotheist.FSM
 		{
 			base.Enter();
 
-			_currentNeed = _humanNeeds.GetUrgentNeed();
+			_currentNeed = _humanNeeds.GetMostUrgentNeed();
 
 			if (_currentNeed == null)
 			{

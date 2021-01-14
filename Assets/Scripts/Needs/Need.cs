@@ -15,13 +15,14 @@ namespace Monotheist.Human
         private Action<Need> _stateChanged;
 
         private ReactiveProperty<List<Interactable>> _itemsList;
+        private ReactiveProperty<int> _listCount;
         private ReactiveProperty<NeedItemStates> _currentListState;
         private NeedItemStates _lastListState;
 
 
         public ReactiveProperty<float> SatisfactionProperty => _satisfaction;
         public ReactiveProperty<NeedStates> CurrentStateProperty => _currentState;
-        public ReactiveProperty<List<Interactable>> ItemsListProperty => _itemsList;
+        public ReactiveProperty<int> ItemsListCount => _listCount;
         public ReactiveProperty<NeedItemStates> ListStateProperty => _currentListState;
 
 
@@ -35,6 +36,7 @@ namespace Monotheist.Human
 
         public Need(NeedConfig config)
 		{
+            
             _config = config;
             _satisfaction = new ReactiveProperty<float>(_config.satisfactionInitial);
             _currentState = new ReactiveProperty<NeedStates>();
@@ -43,6 +45,7 @@ namespace Monotheist.Human
 
             _currentListState = new ReactiveProperty<NeedItemStates>();
             _itemsList = new ReactiveProperty<List<Interactable>>(new List<Interactable>());
+            _listCount = new ReactiveProperty<int>(_itemsList.Value.Count);
 
             CheckItemListState();    
 		}
@@ -115,6 +118,7 @@ namespace Monotheist.Human
 			else
 			{
                 _itemsList.Value.Add(item);
+                _listCount.Value = _itemsList.Value.Count;
                 CheckItemListState();
                 return true;
 			}

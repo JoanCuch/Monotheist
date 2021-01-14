@@ -30,10 +30,12 @@ namespace Monotheist.FSM
 			}
 			else
 			{
-				bool added = _target.AddOnwer();
+				bool added = _target.Claim();
+
+				Debug.Log("Added");
 				if (added)
 				{
-					_humanNeeds.GetUrgentNeed().AddItem(_target);
+					_humanNeeds.GetMostUrgentNeed().AddItem(_target);
 					Finish(true);
 				}
 				else

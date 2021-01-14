@@ -37,29 +37,39 @@ namespace Monotheist.Human
 			}
 		}
 
-		public Need GetUrgentNeed()
+		public Need GetMostUrgentNeed()
 		{
 			if(_criticList.Count > 0)
 			{
-				return GetUrgentNeedFromList(_criticList);
+				return GetMostUrgentNeedFromList(_criticList);
 			}
 			else if(_unsatisfiedList.Count > 0)
 			{
-				return GetUrgentNeedFromList(_unsatisfiedList);
+				return GetMostUrgentNeedFromList(_unsatisfiedList);
 			}
 			else
 			{
-				return GetUrgentNeedFromList(_needList);
+				return GetMostUrgentNeedFromList(_needList);
 			}
 		}
 
 		public Need GetUrgentItemsNeed()
 		{
-			//TODO get need that requires objects
-			return GetUrgentNeed();
+			if (_criticList.Count > 0)
+			{
+				return GetMostEmptyItemFromList(_criticList);
+			}
+			else if (_unsatisfiedList.Count > 0)
+			{
+				return GetMostEmptyItemFromList(_unsatisfiedList);
+			}
+			else
+			{
+				return GetMostEmptyItemFromList(_needList);
+			}
 		}
 
-		private Need GetUrgentNeedFromList(List<Need> list)
+		private Need GetMostUrgentNeedFromList(List<Need> list)
 		{
 			Need urgent = null;
 
@@ -67,6 +77,19 @@ namespace Monotheist.Human
 			{
 				if (urgent == null) urgent = need;
 				else if (need.SatisfactionValue < urgent.SatisfactionValue) urgent = need;
+			}
+
+			return urgent;
+		}
+
+		private Need GetMostEmptyItemFromList(List<Need> list)
+		{
+			Need urgent = null;
+
+			foreach (Need need in list)
+			{
+				if (urgent == null) urgent = need;
+				else if (need.ItemsListCount.Value < urgent.ItemsListCount.Value) urgent = need;
 			}
 
 			return urgent;

@@ -7,11 +7,11 @@ namespace Monotheist
 {
     public abstract class Interactable : MonoBehaviour
     {
-        protected bool _hasOwner;
+        [SerializeField]protected bool _hasOwner;
 
         public abstract bool Interact(HumanNeeds human);
 
-        public bool AddOnwer()
+        public bool Claim()
 		{
             if(_hasOwner)
 			{

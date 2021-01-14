@@ -39,7 +39,7 @@ namespace Monotheist
 
                 need.SatisfactionProperty.Subscribe((float value) => stats.satisfaction = value);
                 need.CurrentStateProperty.Subscribe((NeedStates value) => stats.currentState = value);
-                need.ItemsListProperty.Subscribe((List<Interactable> value) => stats.listCount = value.Count);
+                need.ItemsListCount.Subscribe((int value) => stats.listCount = value);
                 need.ListStateProperty.Subscribe((NeedItemStates value) => stats.listState = value);
 
                 needsList.Add(stats);

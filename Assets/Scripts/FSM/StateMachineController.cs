@@ -44,26 +44,22 @@ namespace Monotheist.FSM
 
         public void Update()
         {
-            Need currentNeed = _humanNeeds.GetUrgentNeed();
-            
-            if(currentNeed.CurrentStateValue == NeedStates.lethal)
+            Need currentNeed = _humanNeeds.GetMostUrgentNeed();
+
+            if (currentNeed.CurrentStateValue == NeedStates.lethal)
 			{
                 ChangeState(typeof(DeathState));
 			}
-            else if(currentNeed.CurrentStateValue != NeedStates.satisfied)
+
+            if(_currentState.Value.GetType() == typeof(WanderState))
 			{
-                ChangeState(typeof(SatisfyState));
+                SelectNextGoal(currentNeed);
 			}
-            else if(currentNeed.CurrentItemListState != NeedItemStates.satisfied)
-			{
-                ChangeState(typeof(RecollectState));
-			}
-			else if(_currentState.GetType() != typeof(WanderState))
-			{
-                ChangeState(typeof(WanderState));
-			}
-                                 
-            if (_currentState != null) _currentState.Value.Execute();
+
+            if (_currentState != null && _currentState.Value != null)
+            {
+                _currentState.Value.Execute();
+            }
         }
 
         public void ChangeState(Type newStateType)
@@ -100,5 +96,21 @@ namespace Monotheist.FSM
                 }
             }           
 		}       
+    
+        public void SelectNextGoal(Need currentNeed)
+		{
+            //If the human is wandering, search something to do.
+            //TODO This should be thorugh event send by human needs.
+
+            if (currentNeed.CurrentStateValue != NeedStates.satisfied)
+            {
+                ChangeState(typeof(SatisfyState));
+            }
+            else if (currentNeed.CurrentItemListState != NeedItemStates.satisfied)
+            {
+                ChangeState(typeof(ClaimState));
+                //ChangeState(typeof(RecollectState));
+            }
+        }   
     }   
 }
