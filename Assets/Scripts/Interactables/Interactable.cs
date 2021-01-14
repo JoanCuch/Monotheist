@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
+using UnityEngine.Assertions;
 
 namespace Monotheist
 {
     public abstract class Interactable : MonoBehaviour
     {
-        [SerializeField]protected bool _hasOwner;
+        [SerializeField] protected bool _hasOwner;
+        [SerializeField] protected string _tag;
 
-        public abstract bool Interact(HumanNeeds human);
+		public void Start()
+		{
+            Assert.AreNotEqual(_tag.Length, 0, name + "has an empty tag");
+        }
+
+
+		public abstract bool Interact(HumanNeeds humanNeeds);
 
         public bool Claim()
 		{

@@ -15,6 +15,7 @@ namespace Monotheist.Human
         public string tag;
 
         public float satisfactionMax;
+        public float satisfactionFullfilledLevel;
         public float satisfactionUnsatisfiedLevel;
         public float satisfactionCriticLevel;
         public float satisfactionLethalLevel;

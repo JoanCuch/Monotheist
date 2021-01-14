@@ -12,8 +12,9 @@ namespace Monotheist.FSM
 		Transform _owner;
 		Interactable _target;
 
-		public InteractAction(HumanNeeds humanNeeds, Transform owner) : base(ActionTags.interact)
+		public InteractAction(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(ActionTags.interact)
 		{
+			_humanConfig = humanConfig;
 			_humanNeeds = humanNeeds;
 			_owner = owner;
 		}
@@ -28,7 +29,13 @@ namespace Monotheist.FSM
 		{
 			base.Execute();
 
-			if (_target != null)
+
+			bool canContinue = _target.Interact(_humanNeeds);
+
+			if (!canContinue) Finish(true);
+
+
+			/*if (_target != null)
 			{
 				if (Vector3.Distance(_target.transform.position, _owner.position) >= _humanConfig.interactRange)
 				{
@@ -40,7 +47,7 @@ namespace Monotheist.FSM
 
 					if(!canContinue)Finish(true);
 				}
-			}
+			}*/
 		}
 
 		public override void Exit()

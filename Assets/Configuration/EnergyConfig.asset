@@ -16,6 +16,7 @@ MonoBehaviour:
   satisfactionReductionPerSecond: 2
   tag: energy
   satisfactionMax: 100
+  satisfactionFullfilledLevel: 98
   satisfactionUnsatisfiedLevel: 70
   satisfactionCriticLevel: 40
   satisfactionLethalLevel: 1

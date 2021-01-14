@@ -46,7 +46,7 @@ namespace Monotheist.FSM
         {
             Need currentNeed = _humanNeeds.GetMostUrgentNeed();
 
-            if (currentNeed.CurrentStateValue == NeedStates.lethal)
+            if (currentNeed.CurrentState == NeedStates.lethal)
 			{
                 ChangeState(typeof(DeathState));
 			}
@@ -102,7 +102,7 @@ namespace Monotheist.FSM
             //If the human is wandering, search something to do.
             //TODO This should be thorugh event send by human needs.
 
-            if (currentNeed.CurrentStateValue != NeedStates.satisfied)
+            if (currentNeed.CurrentState != NeedStates.satisfied && currentNeed.CurrentState != NeedStates.fullfilled)
             {
                 ChangeState(typeof(SatisfyState));
             }

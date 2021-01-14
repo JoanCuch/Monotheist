@@ -26,17 +26,16 @@ namespace Monotheist.Human
         public ReactiveProperty<NeedItemStates> ListStateProperty => _currentListState;
 
 
-        public float SatisfactionValue => _satisfaction.Value;
-        public NeedStates CurrentStateValue => _currentState.Value;
-        public NeedStates LastStateValue => _lastState;
+        public float Satisfaction => _satisfaction.Value;
+        public NeedStates CurrentState => _currentState.Value;
+        public NeedStates LastState => _lastState;
         public NeedItemStates CurrentItemListState => _currentListState.Value;
         public NeedItemStates LastItemListState => _lastListState;
         public NeedConfig NeedConfig => _config;
         public string Tag => _config.tag;
 
         public Need(NeedConfig config)
-		{
-            
+		{        
             _config = config;
             _satisfaction = new ReactiveProperty<float>(_config.satisfactionInitial);
             _currentState = new ReactiveProperty<NeedStates>();
@@ -61,7 +60,11 @@ namespace Monotheist.Human
 
         private void CheckState()
 		{
-            if (_satisfaction.Value >= _config.satisfactionUnsatisfiedLevel)
+            if(_satisfaction.Value >= _config.satisfactionFullfilledLevel)
+			{
+                ChangeState(NeedStates.fullfilled);
+			}
+            else if (_satisfaction.Value >= _config.satisfactionUnsatisfiedLevel)
             {
                 ChangeState(NeedStates.satisfied);
             }
@@ -123,6 +126,12 @@ namespace Monotheist.Human
                 return true;
 			}
         }
+
+        public void AddSatisfaction(float extraSatisfaction)
+		{
+            _satisfaction.Value = Mathf.Clamp(_satisfaction.Value + extraSatisfaction, _config.satisfactionMin, _config.satisfactionMax);
+           
+		}
 
         public List<Interactable> GetItemsList()
 		{

@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf296c677315494ba62300cb465f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hasOwner: 0
+  _tag: energy
   _regenerationPerSecond: 13
 --- !u!212 &1232410240973192251
 SpriteRenderer:

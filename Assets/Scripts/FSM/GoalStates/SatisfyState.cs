@@ -16,7 +16,7 @@ namespace Monotheist.FSM
 			_owner = owner;
 
 			_actionList.Add(new WalkAction(_humanConfig, owner));
-			_actionList.Add(new InteractAction(_humanNeeds, owner));
+			_actionList.Add(new InteractAction(_humanConfig, _humanNeeds, owner));
 
 			foreach (ActionState action in _actionList)
 			{
@@ -61,7 +61,7 @@ namespace Monotheist.FSM
 		{
 			base.Execute();
 
-			if (_currentNeed.CurrentStateValue == NeedStates.satisfied)
+			if (_currentNeed.CurrentState == NeedStates.fullfilled)
 			{
 				Finish(typeof(WanderState));
 			}

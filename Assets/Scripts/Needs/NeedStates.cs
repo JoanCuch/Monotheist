@@ -6,6 +6,7 @@ namespace Monotheist.Human
 {
     public enum NeedStates
     {
+        fullfilled,
         satisfied,
         unsatisfied,
         critic,
