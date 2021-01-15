@@ -122,7 +122,6 @@ namespace Monotheist.Human
 
 		public Interactable GetDragObject()
 		{
-			_dragObject = null;
 			return _dragObject;
 		}
 

@@ -20,7 +20,7 @@ namespace Monotheist.FSM
 			_actionList.Add(new WalkAction(humanConfig, owner));
 			_actionList.Add(new DragAction(humanConfig, humanNeeds, owner));
 			_actionList.Add(new DropAction(humanNeeds));
-			_actionList.Add(new ClaimAction(_humanNeeds));
+			_actionList.Add(new ClaimAction(humanNeeds));
 
 			foreach(ActionState action in _actionList)
 			{
@@ -97,7 +97,8 @@ namespace Monotheist.FSM
 					{
 						//SelectTargetAndWalk();
 						Debug.Log("dropped object");
-						Finish(typeof(WanderState));
+						ChangeAction(ActionTags.claim);
+						(_currentAction as ClaimAction).SetTarget(_currentTarget);
 					}
 					else
 					{
@@ -121,6 +122,7 @@ namespace Monotheist.FSM
 							{
 								_lastAction = ActionTags.drop;
 								ChangeAction(ActionTags.drop);
+								(_currentAction as DropAction).SetTarget(_currentTarget);
 							}
 						}
 						else
@@ -178,7 +180,7 @@ namespace Monotheist.FSM
 			}
 			else
 			{
-				Debug.Log("target tag: " + _currentTarget.tag);
+				Debug.Log("target tag: " + _currentTarget.name);
 				ChangeAction(ActionTags.walk);
 				((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
 			}

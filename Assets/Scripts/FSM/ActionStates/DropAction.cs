@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
 	public class DropAction : ActionState
 	{
 		HumanNeeds _humanNeeds;
+		Interactable _target;
 
 		public DropAction(HumanNeeds humanNeeds) : base(ActionTags.drop)
 		{
@@ -21,12 +23,10 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
-
-			Interactable target = _humanNeeds.GetDragObject();
-			
-			if(target != null)
+		
+			if(_target != null)
 			{
-				target.transform.SetParent(null);
+				_target.transform.SetParent(null);
 				Finish(true);
 			}
 			else
@@ -38,6 +38,11 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			base.Exit();
+		}
+
+		public void SetTarget(Interactable target)
+		{
+			_target = target;
 		}
 	}
 }

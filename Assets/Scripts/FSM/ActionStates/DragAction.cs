@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
@@ -26,33 +27,29 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
-		}
-		public override void Exit()
-		{
-			base.Exit();
 
-			if(_target != null)
+			Assert.IsNotNull(_target);
+
+			if (Vector2.Distance(_target.transform.position, _owner.position) <= _humanConfig.interactRange)
 			{
-				if(Vector3.Distance(_target.transform.position, _owner.position) <= _humanConfig.interactRange)
-				{
-					bool completed = _humanNeeds.SetDragObject(_target);
+				bool completed = _humanNeeds.SetDragObject(_target);
 
-					if (completed)
-					{
-						_target.transform.SetParent(_owner);
-					}
-
-					Finish(completed);
-				}
-				else
+				if (completed)
 				{
-					Finish(false);
+					_target.transform.SetParent(_owner);
 				}
+
+				Finish(completed);
 			}
 			else
 			{
 				Finish(false);
 			}
+		}
+		public override void Exit()
+		{
+			base.Exit();
+			_target = null;
 		}
 
 		public void SetTarget(Interactable target)

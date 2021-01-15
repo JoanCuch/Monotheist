@@ -30,7 +30,7 @@ namespace Monotheist
 
 			foreach (Interactable inter in _targetList)
 			{
-				float distance = Vector3.Distance(inter.transform.position, origin);
+				float distance = Vector2.Distance(inter.transform.position, origin);
 
 				if (distance < minDistance)
 				{
