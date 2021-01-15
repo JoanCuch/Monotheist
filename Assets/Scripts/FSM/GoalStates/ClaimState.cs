@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
@@ -28,6 +29,7 @@ namespace Monotheist.FSM
 
 		public override void Enter()
 		{
+			Assert.IsTrue(true, "Claim state invoked. That can never happen");
 			base.Enter();
 
 			_currentNeed = _humanNeeds.GetMostUrgentNeed();
@@ -47,7 +49,7 @@ namespace Monotheist.FSM
 				if (_currentTarget == null)
 				{
 					//There are no objectes, go search them
-					Finish(typeof(RecollectState));
+					Finish(typeof(WanderState));
 				}
 				else
 				{

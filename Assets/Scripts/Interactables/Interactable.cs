@@ -9,11 +9,15 @@ namespace Monotheist
 {
     public abstract class Interactable : MonoBehaviour
     {
-        [SerializeField] protected bool _hasOwner;
+        [SerializeField] protected bool _owned;
+        [SerializeField] protected bool _transportable;
 
         private Action<Interactable> onDestroy;
 
-		void Start()
+
+        public bool Transportable => _transportable;
+
+        void Start()
 		{
         }
 
@@ -22,16 +26,18 @@ namespace Monotheist
 
         public bool Claim()
 		{
-            if(_hasOwner)
+            if(_owned)
 			{
                 return false;
 			}
             else
 			{
-                _hasOwner = true;
+                _owned = true;
                 return true;
             }
         }
+
+        
 
         public void SubscribeOnDestroy(Action<Interactable> action)
 		{

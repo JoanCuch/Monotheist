@@ -108,8 +108,8 @@ namespace Monotheist.FSM
             }
             else if (currentNeed.CurrentItemListState != NeedItemStates.satisfied)
             {
-                ChangeState(typeof(ClaimState));
-                //ChangeState(typeof(RecollectState));
+                //ChangeState(typeof(ClaimState));
+                ChangeState(typeof(RecollectState));
             }
         }   
     }   

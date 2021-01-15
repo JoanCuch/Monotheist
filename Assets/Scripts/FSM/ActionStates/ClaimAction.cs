@@ -35,7 +35,7 @@ namespace Monotheist.FSM
 				Debug.Log("Added");
 				if (added)
 				{
-					_humanNeeds.GetMostUrgentNeed().AddItem(_target);
+					_humanNeeds.GetNeed(_target.tag).AddItem(_target);
 					Finish(true);
 				}
 				else

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
@@ -16,10 +17,10 @@ namespace Monotheist.FSM
 		{
 			_owner = owner;
 
-
 			_actionList.Add(new WalkAction(humanConfig, owner));
 			_actionList.Add(new DragAction(humanConfig, humanNeeds, owner));
 			_actionList.Add(new DropAction(humanNeeds));
+			_actionList.Add(new ClaimAction(_humanNeeds));
 
 			foreach(ActionState action in _actionList)
 			{
@@ -33,6 +34,8 @@ namespace Monotheist.FSM
 			base.Enter();
 
 			_currentNeed = _humanNeeds.GetUrgentItemsNeed();
+
+			Debug.Log("need tag: " + _currentNeed.Tag);
 
 			if(_currentNeed == null)
 			{
@@ -53,16 +56,17 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			base.Execute();
+			Assert.IsNotNull(_currentNeed);
 
-			if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
+			if (_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
 				Debug.LogWarning("current satisifed");
 				Finish(typeof(WanderState));
 			}
 
-
+			base.Execute();
 		}
+
 		public override void Exit()
 		{
 			base.Exit();
@@ -91,7 +95,9 @@ namespace Monotheist.FSM
 				case ActionTags.drop:
 					if (completed)
 					{
-						SelectTargetAndWalk();
+						//SelectTargetAndWalk();
+						Debug.Log("dropped object");
+						Finish(typeof(WanderState));
 					}
 					else
 					{
@@ -103,16 +109,24 @@ namespace Monotheist.FSM
 				case ActionTags.walk:
 					if (completed)
 					{
-						if (_lastAction == ActionTags.drop)
+						if (_currentTarget.Transportable)
 						{
-							_lastAction = ActionTags.drag;
-							ChangeAction(ActionTags.drag);
-							(_currentAction as DragAction).SetTarget(_currentTarget);
+							if (_lastAction == ActionTags.drop)
+							{
+								_lastAction = ActionTags.drag;
+								ChangeAction(ActionTags.drag);
+								(_currentAction as DragAction).SetTarget(_currentTarget);
+							}
+							else
+							{
+								_lastAction = ActionTags.drop;
+								ChangeAction(ActionTags.drop);
+							}
 						}
 						else
 						{
-							_lastAction = ActionTags.drop;
-							ChangeAction(ActionTags.drop);
+							ChangeAction(ActionTags.claim);
+							(_currentAction as ClaimAction).SetTarget(_currentTarget);
 						}
 					}
 					else
@@ -120,6 +134,10 @@ namespace Monotheist.FSM
 						Debug.LogWarning("something went wrong");
 						Finish(typeof(WanderState));
 					}
+					break;
+
+				case ActionTags.claim:
+					Finish(typeof(WanderState));
 					break;
 
 				default:
@@ -160,10 +178,10 @@ namespace Monotheist.FSM
 			}
 			else
 			{
+				Debug.Log("target tag: " + _currentTarget.tag);
 				ChangeAction(ActionTags.walk);
 				((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
 			}
 		}
-
 	}
 }

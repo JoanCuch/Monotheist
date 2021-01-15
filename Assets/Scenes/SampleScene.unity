@@ -658,11 +658,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bread (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 2603470670531654732, guid: c24efae6ac4d92841a55af017e9ea087,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c24efae6ac4d92841a55af017e9ea087, type: 3}
 --- !u!4 &938444027 stripped
@@ -756,7 +751,7 @@ GameObject:
   m_Layer: 0
   m_Name: Interactables
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -768,7 +763,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114466705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2623918, y: 0.94477594, z: -7.470735}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1762290846}

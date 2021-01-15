@@ -76,9 +76,11 @@ namespace Monotheist.Human
 			foreach (Need need in list)
 			{
 				if (urgent == null) urgent = need;
-				else if (need.Satisfaction < urgent.Satisfaction) urgent = need;
+				else if (need.Satisfaction < urgent.Satisfaction)
+				{
+					urgent = need;
+				}
 			}
-
 			return urgent;
 		}
 
