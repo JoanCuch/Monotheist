@@ -8,7 +8,7 @@ namespace Monotheist.FSM {
 
 	public abstract class GoalState : State
 	{
-		private Action<Type> _finished;
+		private Action<GoalTags> _finished;
 		private Action<ActionState> _changedActionState;
 
 		protected List<ActionState> _actionList;
@@ -18,13 +18,15 @@ namespace Monotheist.FSM {
 		protected HumanNeeds _humanNeeds;
 		protected HumanConfig _humanConfig;
 
+		public readonly GoalTags Tag;
 
-		public GoalState(HumanConfig humanConfig, HumanNeeds humanNeeds)
+		public GoalState(HumanConfig humanConfig, HumanNeeds humanNeeds, GoalTags tag)
 		{
 			_actionList = new List<ActionState>();
 			_currentActionIndex = 0;
 			_humanNeeds = humanNeeds;
 			_humanConfig = humanConfig;
+			Tag = tag;
 		}
 
 		public virtual void Enter()
@@ -47,16 +49,16 @@ namespace Monotheist.FSM {
 
 		}
 
-		public void Subscribe(Action<Type> action)
+		public void Subscribe(Action<GoalTags> action)
 		{
 			_finished += action;
 		}
 
 		
 
-		protected void Finish(Type nextType)
+		protected void Finish(GoalTags nextGoalTag)
 		{
-			_finished.Invoke(nextType);
+			_finished.Invoke(nextGoalTag);
 		}
 
 		protected void ChangeAction(ActionTags newActionTag)

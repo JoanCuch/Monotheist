@@ -23,12 +23,11 @@ namespace Monotheist.FSM
             _currentState = new ReactiveProperty<GoalState>();
 
             _stateList = new List<GoalState>();
-            _stateList.Add(new WanderState(humanConfig, humanNeeds, owner));
-            _stateList.Add(new ClaimState(humanConfig, humanNeeds, owner));
-            _stateList.Add(new RecollectState(humanConfig, humanNeeds, owner));
-            _stateList.Add(new SatisfyState(humanConfig, humanNeeds, owner));
-            _stateList.Add(new StartState(humanConfig, humanNeeds));
-            _stateList.Add(new DeathState(humanNeeds, humanConfig, owner));
+            _stateList.Add(new WanderGoal(humanConfig, humanNeeds, owner));
+            _stateList.Add(new RecollectGoal(humanConfig, humanNeeds, owner));
+            _stateList.Add(new SatisfyGoal(humanConfig, humanNeeds, owner));
+            _stateList.Add(new StartGoal(humanConfig, humanNeeds));
+            _stateList.Add(new DeathGoal(humanNeeds, humanConfig, owner));
 
             foreach(GoalState state in _stateList)
 			{
@@ -39,7 +38,7 @@ namespace Monotheist.FSM
             _humanNeeds = humanNeeds;
             _owner = owner;
 
-            ChangeState(typeof(StartState));
+            ChangeState(GoalTags.start);
         }
 
         public void Update()
@@ -48,10 +47,10 @@ namespace Monotheist.FSM
 
             if (currentNeed.CurrentState == NeedStates.lethal)
 			{
-                ChangeState(typeof(DeathState));
+                ChangeState(GoalTags.die);
 			}
 
-            if(_currentState.Value.GetType() == typeof(WanderState))
+            if(_currentState.Value.GetType() == typeof(WanderGoal))
 			{
                 SelectNextGoal(currentNeed);
 			}
@@ -62,20 +61,20 @@ namespace Monotheist.FSM
             }
         }
 
-        public void ChangeState(Type newStateType)
+        public void ChangeState(GoalTags newGoalTag)
 		{                     
-            GoalState newState = null;
+            GoalState newGoal = null;
 
-            foreach(GoalState state in _stateList)
+            foreach(GoalState goal in _stateList)
 			{
-                if(state.GetType() == newStateType)
+                if(goal.Tag == newGoalTag)
 				{
-                    newState = state;
+                    newGoal = goal;
                     break;
 				}
 			}
 
-            if (newState == null)
+            if (newGoal == null)
             {
                 Debug.LogWarning("Error 404, state not found");               
             }
@@ -86,7 +85,7 @@ namespace Monotheist.FSM
                     _currentState.Value.Exit();
                 }
 
-                _currentState.Value = newState;
+                _currentState.Value = newGoal;
 
                 if (_currentState.Value != null)
                 {
@@ -102,17 +101,17 @@ namespace Monotheist.FSM
 
             if (currentNeed.CurrentState != NeedStates.satisfied &&
                 currentNeed.CurrentState != NeedStates.fullfilled &&
-                SatisfyState.ThereAreItems(_humanNeeds, currentNeed.Tag)
+                SatisfyGoal.ThereAreItems(_humanNeeds, currentNeed.Tag)
                 )
             {               
-                ChangeState(typeof(SatisfyState));
+                ChangeState(GoalTags.satisfy);
             }
             else if (
                 currentNeed.CurrentItemListState != NeedItemStates.satisfied &&
-                RecollectState.SearchUnclaimedItemsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
+                RecollectGoal.SearchUnclaimedItemsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
                 )
             {
-                ChangeState(typeof(RecollectState));
+                ChangeState(GoalTags.recollect);
             }
         }   
     }   

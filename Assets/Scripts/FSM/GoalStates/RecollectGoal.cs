@@ -6,14 +6,14 @@ using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
-	public class RecollectState : GoalState
+	public class RecollectGoal : GoalState
 	{
 		private Transform _owner;
 		private Need _currentNeed;
 		private Interactable _currentTarget;
 		private ActionTags _lastAction;
 
-		public RecollectState(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds)
+		public RecollectGoal(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds, GoalTags.recollect)
 		{
 			_owner = owner;
 
@@ -38,12 +38,12 @@ namespace Monotheist.FSM
 			if(_currentNeed == null)
 			{
 				Debug.LogWarning("current need null");
-				Finish(typeof(WanderState));
+				Finish(GoalTags.wander);
 			}
 			else if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
 				Debug.LogWarning("current list satisfied");
-				Finish(typeof(WanderState));
+				Finish(GoalTags.wander);
 			}
 			else
 			{
@@ -81,7 +81,7 @@ namespace Monotheist.FSM
 					if(completed == false)
 					{
 						Debug.LogWarning("something went wrong");
-						Finish(typeof(WanderState));
+						Finish(GoalTags.wander);
 						break;
 					}
 					
@@ -96,13 +96,13 @@ namespace Monotheist.FSM
 
 					}
 											
-					Finish(typeof(WanderState));		
+					Finish(GoalTags.wander);		
 					break;
 
 				case ActionTags.walk:
 					if (completed == false)
 					{
-						Finish(typeof(WanderState));
+						Finish(GoalTags.wander);
 						break;
 					}
 				
@@ -128,7 +128,7 @@ namespace Monotheist.FSM
 					if(completed == false)
 					{
 						//The item was already claimed or there was no item at all
-						Finish(typeof(WanderState));
+						Finish(GoalTags.wander);
 						break;
 					}
 
@@ -141,13 +141,13 @@ namespace Monotheist.FSM
 					}
 					else
 					{
-						Finish(typeof(WanderState));
+						Finish(GoalTags.wander);
 					}
 					break;
 
 				default:
 					Debug.LogWarning("Defualt Recollect State switch");
-					Finish(typeof(WanderState));
+					Finish(GoalTags.wander);
 					break;
 			}
 		}
@@ -159,7 +159,7 @@ namespace Monotheist.FSM
 			if (_currentTarget == null)
 			{
 				Debug.LogWarning("current target null");
-				Finish(typeof(WanderState));
+				Finish(GoalTags.wander);
 			}
 			else
 			{

@@ -6,9 +6,9 @@ using UnityEngine.Events;
 
 namespace Monotheist.FSM
 {
-	public class StartState : GoalState
+	public class StartGoal: GoalState
 	{
-		public StartState(HumanConfig humanConfig, HumanNeeds humanNeeds) : base(humanConfig, humanNeeds)
+		public StartGoal(HumanConfig humanConfig, HumanNeeds humanNeeds) : base(humanConfig, humanNeeds, GoalTags.start)
 		{
 		}
 
@@ -18,7 +18,7 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			Finish(typeof(WanderState));
+			Finish(GoalTags.wander);
 		}
 
 		public override void Exit()

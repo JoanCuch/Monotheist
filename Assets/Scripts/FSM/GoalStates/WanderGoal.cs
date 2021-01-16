@@ -5,11 +5,11 @@ using Monotheist.Human;
 
 namespace Monotheist.FSM
 {
-	public class WanderState : GoalState
+	public class WanderGoal : GoalState
 	{
 		private Transform _owner;
 
-		public WanderState(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds)
+		public WanderGoal(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds, GoalTags.wander)
 		{
 			_owner = owner;
 			_actionList = new List<ActionState>();

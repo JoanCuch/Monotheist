@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 namespace Monotheist.FSM
 {
 
-	public class ClaimState : GoalState
+	/*public class ClaimState : GoalState
 	{
 		Transform _owner;
 		Interactable _currentTarget;
@@ -98,5 +98,5 @@ namespace Monotheist.FSM
 					break;
 			}
 		}
-	}
+	}*/
 }

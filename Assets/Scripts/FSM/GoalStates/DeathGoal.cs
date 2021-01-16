@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Monotheist.FSM {
 
-	public class DeathState : GoalState
+	public class DeathGoal : GoalState
 	{
-		public DeathState(HumanNeeds humanNeeds, HumanConfig humanConfig, Transform owner) : base(humanConfig, humanNeeds)
+		public DeathGoal(HumanNeeds humanNeeds, HumanConfig humanConfig, Transform owner) : base(humanConfig, humanNeeds, GoalTags.die)
 		{
 
 			_actionList.Add(new DieAction(owner));

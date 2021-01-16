@@ -4,14 +4,13 @@ using UnityEngine;
 
 namespace Monotheist.FSM
 {
-    public enum ActionTags
+    public enum GoalTags
     {
-        idle,
-        walk,
-        interact,
-        drag,
-        drop,
-        claim,
+        wander,
+        recollect,
+        satisfy,
+        start,
         die
     }
 }
+

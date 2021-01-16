@@ -6,13 +6,13 @@ using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
-	public class SatisfyState : GoalState
+	public class SatisfyGoal : GoalState
 	{
 		Transform _owner;
 		Interactable _currentTarget;
 		Need _currentNeed;
 
-		public SatisfyState(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds)
+		public SatisfyGoal(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds, GoalTags.satisfy)
 		{
 			_owner = owner;
 
@@ -34,12 +34,12 @@ namespace Monotheist.FSM
 			if (_currentNeed == null)
 			{
 				//There is no need, go walk a little
-				Finish(typeof(WanderState));
+				Finish(GoalTags.wander);
 			}
 			else if(_currentNeed.CurrentItemListState == NeedItemStates.empty)
 			{
 				//There are no objects, go search them
-				Finish(typeof(RecollectState));
+				Finish(GoalTags.recollect);
 			}
 			else
 			{
@@ -48,7 +48,7 @@ namespace Monotheist.FSM
 				if (_currentTarget == null)
 				{
 					//There are no objectes, go search them
-					Finish(typeof(RecollectState));
+					Finish(GoalTags.recollect);
 				}
 				else
 				{
@@ -63,7 +63,7 @@ namespace Monotheist.FSM
 			Assert.IsNotNull(_currentNeed);
 			if (_currentNeed.CurrentState == NeedStates.fullfilled)
 			{
-				Finish(typeof(WanderState));
+				Finish(GoalTags.wander);
 			}
 			else
 			{
@@ -84,7 +84,7 @@ namespace Monotheist.FSM
 			switch (_currentAction.Tag)
 			{
 				case ActionTags.interact:
-					Finish(typeof(WanderState));
+					Finish(GoalTags.wander);
 					break;
 
 				case ActionTags.walk:
@@ -95,12 +95,12 @@ namespace Monotheist.FSM
 					}
 					else
 					{
-						Finish(typeof(WanderState));
+						Finish(GoalTags.wander);
 					}
 					break;
 				default:
 					Debug.LogWarning("Defualt on switch");
-					Finish(typeof(WanderState));
+					Finish(GoalTags.wander);
 					break;
 
 			}
