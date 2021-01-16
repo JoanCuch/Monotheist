@@ -55,14 +55,14 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			Assert.IsNotNull(_currentNeed);
-
-			if (_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
+			base.Execute();
+			/*if (_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
 				Debug.LogWarning("current satisifed");
 				Finish(typeof(WanderState));
-			}
+			}*/
 
-			base.Execute();
+
 		}
 
 		public override void Exit()
@@ -77,71 +77,76 @@ namespace Monotheist.FSM
 		{
 			switch (_currentAction.Tag)
 			{
-				case ActionTags.drag:
-					if (completed)
-					{
-						ChangeAction(ActionTags.walk);
-						((WalkAction)_currentAction).SetTarget(_humanNeeds.HomePosition);
-					}
-					else
+				case ActionTags.drag:		
+					if(completed == false)
 					{
 						Debug.LogWarning("something went wrong");
 						Finish(typeof(WanderState));
+						break;
 					}
+					
+					ChangeAction(ActionTags.walk);
+					((WalkAction)_currentAction).SetTarget(_humanNeeds.HomePosition);
 					break;
 
 				case ActionTags.drop:
-					if (completed)
+					if (completed == false)
 					{
-						//SelectTargetAndWalk();
-						Debug.Log("dropped object");
+						Debug.LogWarning("something went wrong");
+
+					}
+											
+					Finish(typeof(WanderState));		
+					break;
+
+				case ActionTags.walk:
+					if (completed == false)
+					{
+						Finish(typeof(WanderState));
+						break;
+					}
+				
+					if (_lastAction == ActionTags.drop)
+					{
+						//The human get to the object and wants to recollect it. Bet before, he has to claim it.
 						ChangeAction(ActionTags.claim);
 						(_currentAction as ClaimAction).SetTarget(_currentTarget);
 					}
 					else
 					{
-						Debug.LogWarning("something went wrong");
-						Finish(typeof(WanderState));
+						//The human already has the object and wants to release it.
+						_lastAction = ActionTags.drop;
+						ChangeAction(ActionTags.drop);
+						(_currentAction as DropAction).SetTarget(_currentTarget);
 					}
-					break;
-
-				case ActionTags.walk:
-					if (completed)
-					{
-						if (_currentTarget.Transportable)
-						{
-							if (_lastAction == ActionTags.drop)
-							{
-								_lastAction = ActionTags.drag;
-								ChangeAction(ActionTags.drag);
-								(_currentAction as DragAction).SetTarget(_currentTarget);
-							}
-							else
-							{
-								_lastAction = ActionTags.drop;
-								ChangeAction(ActionTags.drop);
-								(_currentAction as DropAction).SetTarget(_currentTarget);
-							}
-						}
-						else
-						{
-							ChangeAction(ActionTags.claim);
-							(_currentAction as ClaimAction).SetTarget(_currentTarget);
-						}
-					}
-					else
-					{
-						Debug.LogWarning("something went wrong");
-						Finish(typeof(WanderState));
-					}
+					
+					
+					
 					break;
 
 				case ActionTags.claim:
-					Finish(typeof(WanderState));
+					if(completed == false)
+					{
+						//The item was already claimed or there was no item at all
+						Finish(typeof(WanderState));
+						break;
+					}
+
+					if (_currentTarget.Transportable) 
+					{
+						//After the item is claimed, get it.
+						_lastAction = ActionTags.drag;
+						ChangeAction(ActionTags.drag);
+						(_currentAction as DragAction).SetTarget(_currentTarget);
+					}
+					else
+					{
+						Finish(typeof(WanderState));
+					}
 					break;
 
 				default:
-					Debug.LogWarning("Defualt on switch");
+					Debug.LogWarning("Defualt Recollect State switch");
 					Finish(typeof(WanderState));
 					break;
 			}

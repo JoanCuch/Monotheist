@@ -27,21 +27,21 @@ namespace Monotheist.FSM
 			if(_target == null)
 			{
 				Finish(false);
+				return;
+			}
+			
+			bool added = _target.Claim();
+
+			if (added)
+			{
+				_humanNeeds.GetNeed(_target.tag).AddItem(_target);
+				Finish(true);
 			}
 			else
 			{
-				bool added = _target.Claim();
-
-				if (added)
-				{
-					_humanNeeds.GetNeed(_target.tag).AddItem(_target);
-					Finish(true);
-				}
-				else
-				{
-					Finish(false);
-				}
+				Finish(false);
 			}
+			
 		}
 
 		public override void Exit()
