@@ -20,7 +20,7 @@ namespace Monotheist.FSM {
 
 		public override void Execute()
 		{
-			
+			base.Execute();
 		}
 
 		public override void Exit()

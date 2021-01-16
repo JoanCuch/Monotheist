@@ -23,8 +23,8 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
-			Debug.Log(_owner.name + "has died. RIP in Pepperoni");
-			Object.Destroy(_owner);
+			Debug.Log(_owner.name + " has died. RIP in Pepperoni");
+			Object.Destroy(_owner.gameObject);
 		}
 		public override void Exit()
 		{
