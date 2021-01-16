@@ -16,6 +16,7 @@ namespace Monotheist
 
 
         public bool Transportable => _transportable;
+        public bool Owned => _owned;
 
         void Start()
 		{

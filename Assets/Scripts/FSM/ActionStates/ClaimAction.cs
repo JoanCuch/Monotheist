@@ -32,7 +32,6 @@ namespace Monotheist.FSM
 			{
 				bool added = _target.Claim();
 
-				Debug.Log("Added");
 				if (added)
 				{
 					_humanNeeds.GetNeed(_target.tag).AddItem(_target);

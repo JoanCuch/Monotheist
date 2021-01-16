@@ -25,7 +25,6 @@ namespace Monotheist.FSM
 		public override void Enter()
 		{
 			base.Enter();
-			Debug.Log("enter wander");
 			ChangeAction(ActionTags.idle);
 			((IdleAction)_currentAction).SetTimer(_humanConfig.idleTime);
 		}

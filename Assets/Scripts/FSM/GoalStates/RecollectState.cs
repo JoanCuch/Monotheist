@@ -35,8 +35,6 @@ namespace Monotheist.FSM
 
 			_currentNeed = _humanNeeds.GetUrgentItemsNeed();
 
-			Debug.Log("need tag: " + _currentNeed.Tag);
-
 			if(_currentNeed == null)
 			{
 				Debug.LogWarning("current need null");
@@ -149,26 +147,6 @@ namespace Monotheist.FSM
 			}
 		}
 
-		/*private Interactable SearchTarget(Need _need)
-		{
-			List<Interactable> _targetList = _need.GetItemsList();
-			Interactable target = null;
-
-			float minDistance = Mathf.Infinity;
-
-			foreach (Interactable inter in _targetList)
-			{
-				float distance = Vector3.Distance(inter.transform.position, _owner.position);
-
-				if (distance < minDistance)
-				{
-					minDistance = distance;
-					target = inter;
-				}
-			}
-			return target;
-		}*/
-
 		private void SelectTargetAndWalk()
 		{
 			_currentTarget = Utils.SearchInteractable(_owner.position, _humanConfig.searchRange, _currentNeed.Tag);
@@ -180,15 +158,18 @@ namespace Monotheist.FSM
 			}
 			else
 			{
-				Debug.Log("target tag: " + _currentTarget.name);
 				ChangeAction(ActionTags.walk);
 				((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
 			}
 		}
 
-		public static bool ThereAreTargetsAround(Vector3 origin, float searchRange, string tag)
+		public static bool SearchUnclaimedItemsAround(Vector3 origin, float searchRange, string tag)
 		{
-			return Utils.SearchInteractable(origin, searchRange, tag) != null;
+			Interactable item = Utils.SearchInteractable(origin, searchRange, tag);
+
+			if (item != null && item.Owned == false) return true;
+
+			return false;
 		}
 	}
 }

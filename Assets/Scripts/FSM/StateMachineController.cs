@@ -81,8 +81,6 @@ namespace Monotheist.FSM
             }
             else
             {
-                Debug.Log("Change state: " + newState);
-
                 if (_currentState.Value != null)
                 {
                     _currentState.Value.Exit();
@@ -111,7 +109,7 @@ namespace Monotheist.FSM
             }
             else if (
                 currentNeed.CurrentItemListState != NeedItemStates.satisfied &&
-                RecollectState.ThereAreTargetsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
+                RecollectState.SearchUnclaimedItemsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
                 )
             {
                 ChangeState(typeof(RecollectState));

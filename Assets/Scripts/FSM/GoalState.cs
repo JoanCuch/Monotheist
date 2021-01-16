@@ -56,7 +56,6 @@ namespace Monotheist.FSM {
 
 		protected void Finish(Type nextType)
 		{
-			Debug.Log("finish " + nextType);
 			_finished.Invoke(nextType);
 		}
 

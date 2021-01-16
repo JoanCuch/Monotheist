@@ -137,8 +137,7 @@ namespace Monotheist.Human
 
         public void AddSatisfaction(float extraSatisfaction)
 		{
-            _satisfaction.Value = Mathf.Clamp(_satisfaction.Value + extraSatisfaction, _config.satisfactionMin, _config.satisfactionMax);
-           
+            _satisfaction.Value = Mathf.Clamp(_satisfaction.Value + extraSatisfaction, _config.satisfactionMin, _config.satisfactionMax);         
 		}
 
         public List<Interactable> GetItemsList()
