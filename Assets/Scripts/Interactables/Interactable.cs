@@ -40,7 +40,7 @@ namespace Monotheist
         
 
         public void SubscribeOnDestroy(Action<Interactable> action)
-		{
+		{          
             onDestroy += action;
 		}
 

@@ -125,5 +125,10 @@ namespace Monotheist.FSM
 			}
 			return target;		
 		}
+
+		public static bool ThereAreItems(HumanNeeds _humanNeeds,string tag)
+		{
+			return _humanNeeds.GetNeed(tag).CurrentItemListState != NeedItemStates.empty;
+		}
 	}
 }

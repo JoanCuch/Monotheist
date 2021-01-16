@@ -185,5 +185,10 @@ namespace Monotheist.FSM
 				((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
 			}
 		}
+
+		public static bool ThereAreTargetsAround(Vector3 origin, float searchRange, string tag)
+		{
+			return Utils.SearchInteractable(origin, searchRange, tag) != null;
+		}
 	}
 }

@@ -102,13 +102,18 @@ namespace Monotheist.FSM
             //If the human is wandering, search something to do.
             //TODO This should be thorugh event send by human needs.
 
-            if (currentNeed.CurrentState != NeedStates.satisfied && currentNeed.CurrentState != NeedStates.fullfilled)
-            {
+            if (currentNeed.CurrentState != NeedStates.satisfied &&
+                currentNeed.CurrentState != NeedStates.fullfilled &&
+                SatisfyState.ThereAreItems(_humanNeeds, currentNeed.Tag)
+                )
+            {               
                 ChangeState(typeof(SatisfyState));
             }
-            else if (currentNeed.CurrentItemListState != NeedItemStates.satisfied)
+            else if (
+                currentNeed.CurrentItemListState != NeedItemStates.satisfied &&
+                RecollectState.ThereAreTargetsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
+                )
             {
-                //ChangeState(typeof(ClaimState));
                 ChangeState(typeof(RecollectState));
             }
         }   

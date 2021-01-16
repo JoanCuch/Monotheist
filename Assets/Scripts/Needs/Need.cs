@@ -131,7 +131,9 @@ namespace Monotheist.Human
         public void RemoveItem(Interactable item)
 		{
             _itemsList.Value.Remove(item);
-		}
+            _listCount.Value = _itemsList.Value.Count;
+            CheckItemListState();
+        }
 
         public void AddSatisfaction(float extraSatisfaction)
 		{

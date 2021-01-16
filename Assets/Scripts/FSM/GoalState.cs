@@ -62,8 +62,6 @@ namespace Monotheist.FSM {
 
 		protected void ChangeAction(ActionTags newActionTag)
 		{
-			Debug.Log("new action " + newActionTag);
-
 			ActionState newAction = null;
 
 			foreach (ActionState action in _actionList)
