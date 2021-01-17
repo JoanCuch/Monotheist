@@ -18,6 +18,7 @@ namespace Monotheist.Human
 
 		public NeedConfig energyConfig;
 		public NeedConfig satiationConfig;
+		public NeedConfig homeConfig;
 		
 		//Energy
 		[Range(0, 100)] public float initialEnergy;

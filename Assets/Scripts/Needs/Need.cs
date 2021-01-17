@@ -87,7 +87,7 @@ namespace Monotheist.Human
             _lastState = _currentState.Value;
             _currentState.Value = newState;
 		}  
-     
+
         private void CheckItemListState()
 		{
             if(_itemsList.Value.Count > _config.itemListUnsatisfiedLevel)
@@ -148,8 +148,6 @@ namespace Monotheist.Human
         public void Subscribe(Action<Need> action)
 		{
             _stateChanged += action;            
-		}
-
-        
+		}      
     }
 }

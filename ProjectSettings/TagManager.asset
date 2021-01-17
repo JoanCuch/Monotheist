@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Bed
   - energy
   - satiation
+  - home
   layers:
   - Default
   - TransparentFX

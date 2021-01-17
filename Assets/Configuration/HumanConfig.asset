@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyConfig: {fileID: 11400000, guid: 69df8dec33759af4491c8d42d42bb561, type: 2}
   satiationConfig: {fileID: 11400000, guid: d1f7856f9e24d1d47b7ea9826d2dc70f, type: 2}
+  homeConfig: {fileID: 11400000, guid: 875a2b3b6fbfedc44ad66a795762f44a, type: 2}
   initialEnergy: 100
   energyTiredLimit: 50
   energyAwakeLimit: 95

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85117927ba6cabe44be5d5ed0abef095, type: 3}
-  m_Name: EnergyConfig
+  m_Name: HomeConfig
   m_EditorClassIdentifier: 
   satisfactionInitial: 100
-  satisfactionReductionPerSecond: 1
-  tag: energy
+  satisfactionReductionPerSecond: 0
+  tag: Home
   satisfactionMax: 100
   satisfactionFullfilledLevel: 98
   satisfactionUnsatisfiedLevel: 70
-  satisfactionCriticLevel: 40
+  satisfactionCriticLevel: 30
   satisfactionLethalLevel: 1
   satisfactionMin: 0
-  itemListMax: 3
+  itemListMax: 1
   itemListUnsatisfiedLevel: 0

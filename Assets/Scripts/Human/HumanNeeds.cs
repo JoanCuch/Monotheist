@@ -22,6 +22,7 @@ namespace Monotheist.Human
 			
 			_needList.Add(new Need(humanConfig.energyConfig));
 			_needList.Add(new Need(humanConfig.satiationConfig));
+			_needList.Add(new Need(humanConfig.homeConfig));
 
 			foreach(Need need in _needList)
 			{

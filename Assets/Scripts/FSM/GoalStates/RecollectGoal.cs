@@ -47,6 +47,15 @@ namespace Monotheist.FSM
 			}
 			else
 			{
+				
+				/*if(_currentNeed.Tag == NeedTags.satiation.ToString() &&
+					_humanNeeds.GetNeed(NeedTags.home.ToString()).CurrentItemListState == NeedItemStates.empty
+					)
+				{
+					Finish(GoalTags.recollect);
+				}*/
+				
+				
 				SelectTargetAndWalk();
 				_lastAction = ActionTags.drop;
 			}
@@ -56,13 +65,6 @@ namespace Monotheist.FSM
 		{
 			Assert.IsNotNull(_currentNeed);
 			base.Execute();
-			/*if (_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
-			{
-				Debug.LogWarning("current satisifed");
-				Finish(typeof(WanderState));
-			}*/
-
-
 		}
 
 		public override void Exit()
