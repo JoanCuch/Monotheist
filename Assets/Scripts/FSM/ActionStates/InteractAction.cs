@@ -1,53 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Monotheist.Human;
+﻿using Monotheist.Human;
 
 namespace Monotheist.FSM
 {
 	public class InteractAction : ActionState 
 	{
 		HumanNeeds _humanNeeds;
-		HumanConfig _humanConfig;
-		Transform _owner;
 		Interactable _target;
 
-		public InteractAction(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(ActionTags.interact)
+		public InteractAction(HumanNeeds humanNeeds) : base(ActionTags.interact)
 		{
-			_humanConfig = humanConfig;
 			_humanNeeds = humanNeeds;
-			_owner = owner;
+			_target = NullInteractable.Instance;
 		}
 
 		public override void Enter()
 		{
-			base.Enter();
-			
+			base.Enter();			
 		}
 
 		public override void Execute()
 		{
 			base.Execute();
 
-
 			bool canContinue = _target.Interact(_humanNeeds);
 
-			if (!canContinue) Finish(true);
-
-
-			/*if (_target != null)
-			{
-				if (Vector3.Distance(_target.transform.position, _owner.position) >= _humanConfig.interactRange)
-				{
-					Finish(false);
-				}
-				else
-				{
-					bool canContinue = _target.Interact(_humanNeeds);
-
-					if(!canContinue)Finish(true);
-				}
-			}*/
+			if (!canContinue)
+				Finish(true);
 		}
 
 		public override void Exit()
@@ -56,7 +34,7 @@ namespace Monotheist.FSM
 			_target = null;
 		}
 
-		public void SetTarget(Interactable target)
+		public override void SetTarget(Interactable target)
 		{
 			_target = target;
 		}

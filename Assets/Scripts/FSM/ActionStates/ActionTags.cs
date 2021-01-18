@@ -12,6 +12,7 @@ namespace Monotheist.FSM
         drag,
         drop,
         claim,
-        die
+        die,
+        nullAction
     }
 }

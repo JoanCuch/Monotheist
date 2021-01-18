@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Monotheist.Human
 {
@@ -10,7 +8,6 @@ namespace Monotheist.Human
         [SerializeField] private HumanManager _humanManager;
         [SerializeField] private HumanStatsSpy _humanStatsSpy;
 
-
         void Start()
         {
             _humanManager.Install(_humanConfig, _humanStatsSpy);
@@ -18,7 +15,6 @@ namespace Monotheist.Human
 
         void Update()
         {
-
         }
     }
 }

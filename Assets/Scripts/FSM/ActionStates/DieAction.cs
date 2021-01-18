@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Monotheist.Human;
+﻿using UnityEngine;
 
 namespace Monotheist.FSM
 {
@@ -9,7 +6,6 @@ namespace Monotheist.FSM
 	public class DieAction : ActionState
 	{
 		public Transform _owner;
-
 
 		public DieAction(Transform owner) : base(ActionTags.die)
 		{

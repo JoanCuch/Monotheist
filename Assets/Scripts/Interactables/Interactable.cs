@@ -14,7 +14,6 @@ namespace Monotheist
 
         private Action<Interactable> onDestroy;
 
-
         public bool Transportable => _transportable;
         public bool Owned => _owned;
 
@@ -31,14 +30,10 @@ namespace Monotheist
 			{
                 return false;
 			}
-            else
-			{
-                _owned = true;
-                return true;
-            }
-        }
 
-        
+            _owned = true;
+            return true;
+        }
 
         public void SubscribeOnDestroy(Action<Interactable> action)
 		{          
@@ -47,7 +42,7 @@ namespace Monotheist
 
 		private void OnDestroy()
 		{
-            if(onDestroy != null)onDestroy.Invoke(this);
+            onDestroy?.Invoke(this);
 		}
 	}
 }

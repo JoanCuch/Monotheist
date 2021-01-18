@@ -1,22 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Monotheist.Human;
 
 namespace Monotheist.FSM
 {
 	public class IdleAction : ActionState
 	{
 		private float _timer;
+		private float _initialTime;
 
-		public IdleAction() : base(ActionTags.idle)
+		public IdleAction(HumanConfig humanConfig) : base(ActionTags.idle)
 		{
+			_initialTime = humanConfig.idleTime;
 		}
-
 
 		public override void Enter()
 		{
 			base.Enter();			
-			_timer = 1;
+			_timer = _initialTime;
 		}
 
 		public override void Execute()
@@ -24,7 +24,8 @@ namespace Monotheist.FSM
 			base.Execute();
 			_timer += -1 * Time.deltaTime;
 
-			if (_timer <= 0) Finish(true);
+			if (_timer <= 0)
+				Finish(true);
 		}
 
 		public override void Exit()
@@ -32,6 +33,6 @@ namespace Monotheist.FSM
 			base.Exit();
 		}
 
-		public void SetTimer(float newTimer) { _timer = newTimer; }
+		public void SetTimer(float newTime) { _timer = newTime; }
 	}
 }

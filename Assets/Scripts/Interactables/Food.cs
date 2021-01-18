@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Monotheist.Human;
 using UnityEngine.Assertions;
 
@@ -13,14 +11,8 @@ namespace Monotheist
 
         void Update()
         {
-
         }
 
-        /// <summary>
-        /// Interact with the humanNeeds class and returns false when the object cannot interact any more.
-        /// </summary>
-        /// <param name="humanNeeds"></param>
-        /// <returns></returns>
         public override bool Interact(HumanNeeds humanNeeds)
         {
             float nutrition = _nutritionPerSecond * Time.deltaTime;
@@ -38,7 +30,7 @@ namespace Monotheist
 			else
 			{
                 need.AddSatisfaction(nutrition * Time.deltaTime);
-                Destroy(this.gameObject);
+                Destroy(gameObject);
                 return false;
 			}
         }

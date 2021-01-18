@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Monotheist.Human;
+﻿using Monotheist.Human;
 
 namespace Monotheist.FSM
 {
@@ -10,10 +7,10 @@ namespace Monotheist.FSM
 		private Interactable _target;
 		private HumanNeeds _humanNeeds;
 
-
 		public ClaimAction(HumanNeeds humanNeeds) : base(ActionTags.claim)
 		{
 			_humanNeeds = humanNeeds;
+			_target = NullInteractable.Instance;
 		}
 
 		public override void Enter()
@@ -23,16 +20,14 @@ namespace Monotheist.FSM
 
 		public override void Execute()
 		{
-			base.Execute();
-			if(_target == null)
-			{
-				Finish(false);
-				return;
-			}
+			if (_target == NullInteractable.Instance)
+				NullInteractable.Instance.SendError(); 
 			
-			bool added = _target.Claim();
+			base.Execute();
+			
+			bool claimed = _target.Claim();
 
-			if (added)
+			if (claimed)
 			{
 				_humanNeeds.GetNeed(_target.tag).AddItem(_target);
 				Finish(true);
@@ -40,16 +35,16 @@ namespace Monotheist.FSM
 			else
 			{
 				Finish(false);
-			}
-			
+			}		
 		}
 
 		public override void Exit()
 		{
 			base.Exit();
+			_target = NullInteractable.Instance;
 		}
 
-		public void SetTarget(Interactable target)
+		public override void SetTarget(Interactable target)
 		{
 			_target = target;
 		}

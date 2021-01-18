@@ -124,5 +124,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _owned: 0
   _transportable: 1
-  _nutritionPerSecond: 1e+14
-  _totalNutrition: 1
+  _nutritionPerSecond: 10
+  _totalNutrition: 50

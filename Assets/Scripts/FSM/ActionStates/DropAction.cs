@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Monotheist.Human;
-using UnityEngine.Assertions;
+﻿using Monotheist.Human;
 
 namespace Monotheist.FSM
 {
@@ -14,6 +10,7 @@ namespace Monotheist.FSM
 		public DropAction(HumanNeeds humanNeeds) : base(ActionTags.drop)
 		{
 			_humanNeeds = humanNeeds;
+			_target = NullInteractable.Instance;
 		}
 
 		public override void Enter()
@@ -22,17 +19,13 @@ namespace Monotheist.FSM
 		}
 		public override void Execute()
 		{
+			if (_target == NullInteractable.Instance)
+				NullInteractable.Instance.SendError();
+			
 			base.Execute();
-		
-			if(_target != null)
-			{
-				_target.transform.SetParent(null);
-				Finish(true);
-			}
-			else
-			{
-				Finish(false);
-			}
+			
+			_target.transform.SetParent(null);
+			Finish(true);
 		}
 
 		public override void Exit()
@@ -40,7 +33,7 @@ namespace Monotheist.FSM
 			base.Exit();
 		}
 
-		public void SetTarget(Interactable target)
+		public override void SetTarget(Interactable target)
 		{
 			_target = target;
 		}

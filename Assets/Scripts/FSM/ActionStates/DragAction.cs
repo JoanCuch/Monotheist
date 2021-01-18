@@ -1,23 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Monotheist.Human;
-using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
     public class DragAction : ActionState
     {
 		Interactable _target;
-		HumanNeeds _humanNeeds;
 		HumanConfig _humanConfig;
 		Transform _owner;
 
-		public DragAction(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(ActionTags.drag)
+		public DragAction(HumanConfig humanConfig, Transform owner) : base(ActionTags.drag)
 		{
 			_humanConfig = humanConfig;
-			_humanNeeds = humanNeeds;
 			_owner = owner;
+			_target = NullInteractable.Instance;
 		}
 
 		public override void Enter()
@@ -26,20 +22,15 @@ namespace Monotheist.FSM
 		}
 		public override void Execute()
 		{
-			base.Execute();
+			if (_target == NullInteractable.Instance)
+				NullInteractable.Instance.SendError();
 
-			Assert.IsNotNull(_target);
+			base.Execute();			
 
 			if (Vector2.Distance(_target.transform.position, _owner.position) <= _humanConfig.interactRange)
 			{
-				bool completed = _humanNeeds.SetDragObject(_target);
-
-				if (completed)
-				{
-					_target.transform.SetParent(_owner);
-				}
-
-				Finish(completed);
+				_target.transform.SetParent(_owner);
+				Finish(true);
 			}
 			else
 			{
@@ -49,10 +40,10 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			base.Exit();
-			_target = null;
+			_target = NullInteractable.Instance;
 		}
 
-		public void SetTarget(Interactable target)
+		public override void SetTarget(Interactable target)
 		{
 			_target = target;
 		}

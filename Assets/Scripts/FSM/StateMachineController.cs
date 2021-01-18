@@ -1,42 +1,41 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 using Monotheist.Human;
+using UnityEngine.Assertions;
 
 
 namespace Monotheist.FSM
 {   
     public class StateMachineController
     {
-        private List<GoalState> _stateList;        
-        private ReactiveProperty<GoalState> _currentState;
+        private List<GoalState> _GoalPool;        
+        private ReactiveProperty<GoalState> _currentGoal;
 
         private HumanNeeds _humanNeeds;
         private HumanConfig _humanConfig;
         private Transform _owner;
 
-        public ReactiveProperty<GoalState> CurrentStateProperty => _currentState;
+        public ReactiveProperty<GoalState> CurrentGoalProperty => _currentGoal;
 
         public StateMachineController(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner)
 		{
-            _currentState = new ReactiveProperty<GoalState>();
-
-            _stateList = new List<GoalState>();
-            _stateList.Add(new WanderGoal(humanConfig, humanNeeds, owner));
-            _stateList.Add(new RecollectGoal(humanConfig, humanNeeds, owner));
-            _stateList.Add(new SatisfyGoal(humanConfig, humanNeeds, owner));
-            _stateList.Add(new StartGoal(humanConfig, humanNeeds));
-            _stateList.Add(new DeathGoal(humanNeeds, humanConfig, owner));
-
-            foreach(GoalState state in _stateList)
-			{
-                state.Subscribe(ChangeState);
-			}
-
             _humanConfig = humanConfig;
             _humanNeeds = humanNeeds;
             _owner = owner;
+
+            _currentGoal = new ReactiveProperty<GoalState>(NullGoal.Instance);
+
+            _GoalPool = new List<GoalState>();
+            _GoalPool.Add(new WanderGoal(humanConfig, humanNeeds, owner));
+            _GoalPool.Add(new RecollectGoal(humanConfig, humanNeeds, owner));
+            _GoalPool.Add(new SatisfyGoal(humanConfig, humanNeeds, owner));
+            _GoalPool.Add(new StartGoal(humanConfig, humanNeeds));
+            _GoalPool.Add(new DeathGoal(humanNeeds, humanConfig, owner));
+
+            foreach(GoalState goal in _GoalPool)
+			{
+                goal.Subscribe(ChangeState);
+			}
 
             ChangeState(GoalTags.start);
         }
@@ -44,28 +43,29 @@ namespace Monotheist.FSM
         public void Update()
         {
             Need currentNeed = _humanNeeds.GetMostUrgentNeed();
+            Assert.IsNotNull(currentNeed);
 
             if (currentNeed.CurrentState == NeedStates.lethal)
 			{
                 ChangeState(GoalTags.die);
 			}
 
-            if(_currentState.Value.GetType() == typeof(WanderGoal))
+            if(_currentGoal.Value.Tag == GoalTags.wander)
 			{
                 SelectNextGoal(currentNeed);
 			}
 
-            if (_currentState != null && _currentState.Value != null)
+            if (_currentGoal.Value != NullGoal.Instance)
             {
-                _currentState.Value.Execute();
+                _currentGoal.Value.Execute();
             }
         }
 
         public void ChangeState(GoalTags newGoalTag)
 		{                     
-            GoalState newGoal = null;
+            GoalState newGoal = NullGoal.Instance;
 
-            foreach(GoalState goal in _stateList)
+            foreach(GoalState goal in _GoalPool)
 			{
                 if(goal.Tag == newGoalTag)
 				{
@@ -74,31 +74,14 @@ namespace Monotheist.FSM
 				}
 			}
 
-            if (newGoal == null)
-            {
-                Debug.LogWarning("Error 404, state not found");               
-            }
-            else
-            {
-                if (_currentState.Value != null)
-                {
-                    _currentState.Value.Exit();
-                }
-
-                _currentState.Value = newGoal;
-
-                if (_currentState.Value != null)
-                {
-                    _currentState.Value.Enter();
-                }
-            }           
+            Assert.AreEqual(newGoal, NullGoal.Instance);
+            _currentGoal.Value.Exit();
+            _currentGoal.Value = newGoal;
+            _currentGoal.Value.Enter();   
 		}       
     
         public void SelectNextGoal(Need currentNeed)
 		{
-            //If the human is wandering, search something to do.
-            //TODO This should be thorugh event send by human needs.
-
             if (currentNeed.CurrentState != NeedStates.satisfied &&
                 currentNeed.CurrentState != NeedStates.fullfilled &&
                 SatisfyGoal.ThereAreItems(_humanNeeds, currentNeed.Tag)
@@ -108,7 +91,7 @@ namespace Monotheist.FSM
             }
             else if (
                 currentNeed.CurrentItemListState != NeedItemStates.satisfied &&
-                RecollectGoal.SearchUnclaimedItemsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
+                RecollectGoal.ThereAreUnclaimedItemsAround(_owner.position, _humanConfig.searchRange, currentNeed.Tag)
                 )
             {
                 ChangeState(GoalTags.recollect);

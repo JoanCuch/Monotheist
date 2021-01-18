@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Monotheist.Human;
-
 
 namespace Monotheist.FSM {
 	public class WalkAction : ActionState
@@ -15,6 +12,7 @@ namespace Monotheist.FSM {
 		{
 			_humanConfig = humanConfig;
 			_owner = owner;
+			_target = Vector3.zero;
 		}
 		
 		public override void Enter()
@@ -23,11 +21,12 @@ namespace Monotheist.FSM {
 		}
 
 		public override void Execute()
-		{
+		{	
 			base.Execute();
 
 			if (_target == null)
 			{
+				//This null check is necessary in case that the target is destroyed by other human.
 				Finish(false);
 			}
 			else if (Vector2.Distance(_target, _owner.position) <= _humanConfig.interactRange)
@@ -43,8 +42,16 @@ namespace Monotheist.FSM {
 		public override void Exit()
 		{
 			base.Exit();
+			_target = Vector3.zero;
 		}
 
-		public void SetTarget(Vector3 newTarget) { _target = newTarget; }
+		public override void SetTarget(Interactable target)
+		{
+			_target = target.transform.position;
+		}
+		public  void SetTarget(Vector3 target)
+		{
+			_target = target;
+		}
 	}
 }

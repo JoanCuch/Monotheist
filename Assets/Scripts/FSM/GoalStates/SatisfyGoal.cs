@@ -1,5 +1,4 @@
 ﻿using Monotheist.Human;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -16,10 +15,10 @@ namespace Monotheist.FSM
 		{
 			_owner = owner;
 
-			_actionList.Add(new WalkAction(_humanConfig, owner));
-			_actionList.Add(new InteractAction(_humanConfig, _humanNeeds, owner));
+			_actionsList.Add(new WalkAction(_humanConfig, owner));
+			_actionsList.Add(new InteractAction(_humanNeeds));
 
-			foreach (ActionState action in _actionList)
+			foreach (ActionState action in _actionsList)
 			{
 				action.Subscribe(FinishedAction);
 			}
@@ -53,7 +52,7 @@ namespace Monotheist.FSM
 				else
 				{
 					ChangeAction(ActionTags.walk);
-					((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
+					_currentAction.SetTarget(_currentTarget);
 				}
 			}				
 		}

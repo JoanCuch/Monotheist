@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
 
@@ -12,11 +11,12 @@ namespace Monotheist.FSM
 		public WanderGoal(HumanConfig humanConfig, HumanNeeds humanNeeds, Transform owner) : base(humanConfig, humanNeeds, GoalTags.wander)
 		{
 			_owner = owner;
-			_actionList = new List<ActionState>();
-			_actionList.Add(new IdleAction());
-			_actionList.Add(new WalkAction(humanConfig, owner));
+			_actionsList = new List<ActionState>();
 
-			foreach(ActionState action in _actionList)
+			_actionsList.Add(new IdleAction(humanConfig));
+			_actionsList.Add(new WalkAction(humanConfig, owner));
+
+			foreach(ActionState action in _actionsList)
 			{
 				action.Subscribe(FinishedAction);
 			}
@@ -26,7 +26,6 @@ namespace Monotheist.FSM
 		{
 			base.Enter();
 			ChangeAction(ActionTags.idle);
-			((IdleAction)_currentAction).SetTimer(_humanConfig.idleTime);
 		}
 
 		public override void Execute()
@@ -40,7 +39,6 @@ namespace Monotheist.FSM
 			{
 				case ActionTags.walk:
 					ChangeAction(ActionTags.idle);
-					((IdleAction)_currentAction).SetTimer(_humanConfig.idleTime); 
 					break;
 
 				case ActionTags.idle:

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Monotheist.Human;
 using Monotheist.FSM;
-
 
 namespace Monotheist
 {
@@ -13,7 +11,6 @@ namespace Monotheist
 
         public GoalState currentGoalState;
         public ActionState currentActionState;
-
 
         void Start()
         {
@@ -25,7 +22,7 @@ namespace Monotheist
         
         public void Configurate(HumanNeeds humanNeeds, StateMachineController stateMachineController)
 		{
-            stateMachineController.CurrentStateProperty.Subscribe(ChangeGoalState);
+            stateMachineController.CurrentGoalProperty.Subscribe(ChangeGoalState);
             
             foreach (Need need in humanNeeds.NeedList)
             {

@@ -1,6 +1,4 @@
 ﻿using Monotheist.Human;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Monotheist.FSM {
@@ -9,8 +7,7 @@ namespace Monotheist.FSM {
 	{
 		public DeathGoal(HumanNeeds humanNeeds, HumanConfig humanConfig, Transform owner) : base(humanConfig, humanNeeds, GoalTags.die)
 		{
-
-			_actionList.Add(new DieAction(owner));
+			_actionsList.Add(new DieAction(owner));
 		}
 
 		public override void Enter()

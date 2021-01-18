@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Monotheist.Human;
+using UnityEngine.Assertions;
 
 namespace Monotheist
 {
@@ -24,7 +23,7 @@ namespace Monotheist
 			}
 
 			//From the around objects, go to the nearest
-			Interactable target = null;
+			Interactable target = NullInteractable.Instance;
 
 			float minDistance = Mathf.Infinity;
 
@@ -38,6 +37,7 @@ namespace Monotheist
 					target = inter;
 				}
 			}
+			Assert.IsNotNull(target);
 			return target;
 		}
     }

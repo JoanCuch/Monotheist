@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
 	public abstract class ActionState : State
 	{
 		public readonly ActionTags Tag;
-			
+
 		private Action<bool> _finished;
 
 		public ActionState(ActionTags tag)
@@ -37,7 +38,13 @@ namespace Monotheist.FSM
 
 		protected void Finish(bool completed)
 		{
+			Assert.IsNotNull(_finished);
 			_finished.Invoke(completed);
+		}
+
+		public virtual void SetTarget(Interactable target)
+		{
+		
 		}
 	}
 }

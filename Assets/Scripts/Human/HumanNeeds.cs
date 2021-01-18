@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Monotheist.FSM;
+using UnityEngine.Assertions;
 
 namespace Monotheist.Human
 {
@@ -11,9 +10,6 @@ namespace Monotheist.Human
 		private List<Need> _unsatisfiedList;
 		private List<Need> _criticList;
 
-		//This should not be here
-		private Interactable _dragObject;
-
 		public HumanNeeds(HumanConfig humanConfig)
 		{
 			_needList = new List<Need>();
@@ -22,7 +18,7 @@ namespace Monotheist.Human
 			
 			_needList.Add(new Need(humanConfig.energyConfig));
 			_needList.Add(new Need(humanConfig.satiationConfig));
-			_needList.Add(new Need(humanConfig.homeConfig));
+			//_needList.Add(new Need(humanConfig.homeConfig));
 
 			foreach(Need need in _needList)
 			{
@@ -42,35 +38,47 @@ namespace Monotheist.Human
 		{
 			if(_criticList.Count > 0)
 			{
-				return GetMostUrgentNeedFromList(_criticList);
+				return GetNeedViaSatisfaction(_criticList);
 			}
 			else if(_unsatisfiedList.Count > 0)
 			{
-				return GetMostUrgentNeedFromList(_unsatisfiedList);
+				return GetNeedViaSatisfaction(_unsatisfiedList);
 			}
 			else
 			{
-				return GetMostUrgentNeedFromList(_needList);
+				return GetNeedViaSatisfaction(_needList);
 			}
 		}
 
-		public Need GetUrgentItemsNeed()
+		public Need GetMostUrgentItemNeed()
 		{
 			if (_criticList.Count > 0)
 			{
-				return GetMostEmptyItemFromList(_criticList);
+				return GetNeedViaItemList(_criticList);
 			}
 			else if (_unsatisfiedList.Count > 0)
 			{
-				return GetMostEmptyItemFromList(_unsatisfiedList);
+				return GetNeedViaItemList(_unsatisfiedList);
 			}
 			else
 			{
-				return GetMostEmptyItemFromList(_needList);
+				return GetNeedViaItemList(_needList);
 			}
 		}
 
-		private Need GetMostUrgentNeedFromList(List<Need> list)
+		public Need GetNeed(string tag)
+		{
+			Need urgent = null;
+
+			foreach (Need need in _needList)
+			{
+				if (need.Tag == tag) urgent = need;
+			}
+			Assert.IsNotNull(urgent);
+			return urgent;
+		}
+
+		private Need GetNeedViaSatisfaction(List<Need> list)
 		{
 			Need urgent = null;
 
@@ -82,10 +90,11 @@ namespace Monotheist.Human
 					urgent = need;
 				}
 			}
+			Assert.IsNotNull(urgent);
 			return urgent;
 		}
 
-		private Need GetMostEmptyItemFromList(List<Need> list)
+		private Need GetNeedViaItemList(List<Need> list)
 		{
 			Need urgent = null;
 
@@ -94,10 +103,10 @@ namespace Monotheist.Human
 				if (urgent == null) urgent = need;
 				else if (need.ItemsListCount.Value < urgent.ItemsListCount.Value) urgent = need;
 			}
-
+			Assert.IsNotNull(urgent);
 			return urgent;
 		}
-
+	
 		private void UpdateNeedList(Need need)
 		{
 			switch (need.LastState)
@@ -121,36 +130,8 @@ namespace Monotheist.Human
 			}
 		}
 
-		public Interactable GetDragObject()
-		{
-			return _dragObject;
-		}
-
-		public bool SetDragObject(Interactable dragObject)
-		{
-			if(_dragObject == null)
-			{
-				_dragObject = dragObject;
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
 		public Vector3 HomePosition => Vector3.zero;
 
-		public List<Need> NeedList => _needList;
-
-		public Need GetNeed(string tag)
-		{
-			foreach (Need need in _needList)
-			{
-				if (need.Tag == tag) return need;
-			}
-
-			return null;
-		}
+		public List<Need> NeedList => _needList;		
 	}
 }

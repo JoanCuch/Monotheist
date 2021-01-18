@@ -10,7 +10,8 @@ namespace Monotheist.FSM
         recollect,
         satisfy,
         start,
-        die
+        die,
+        nullGoal
     }
 }
 

@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using System;
-
-namespace Monotheist.FSM
+﻿namespace Monotheist.FSM
 {
     public interface State
     {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Monotheist
 {
@@ -11,7 +9,6 @@ namespace Monotheist
         [SerializeField] private float _spawnsPerSecond;
         [SerializeField] private float _spawnRange;
         [SerializeField] private bool _spawnActivated;
-
 
         private float _timer;
 

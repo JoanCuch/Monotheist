@@ -1,6 +1,4 @@
 ﻿using Monotheist.Human;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,48 +15,38 @@ namespace Monotheist.FSM
 		{
 			_owner = owner;
 
-			_actionList.Add(new WalkAction(humanConfig, owner));
-			_actionList.Add(new DragAction(humanConfig, humanNeeds, owner));
-			_actionList.Add(new DropAction(humanNeeds));
-			_actionList.Add(new ClaimAction(humanNeeds));
+			_actionsList.Add(new WalkAction(humanConfig, owner));
+			_actionsList.Add(new DragAction(humanConfig, owner));
+			_actionsList.Add(new DropAction(humanNeeds));
+			_actionsList.Add(new ClaimAction(humanNeeds));
 
-			foreach(ActionState action in _actionList)
+			foreach(ActionState action in _actionsList)
 			{
 				action.Subscribe(FinishedAction);
 			}
 
+			_currentTarget = NullInteractable.Instance;
 		}
 
 		public override void Enter()
 		{
 			base.Enter();
 
-			_currentNeed = _humanNeeds.GetUrgentItemsNeed();
+			_currentNeed = _humanNeeds.GetMostUrgentItemNeed();
 
-			if(_currentNeed == null)
+			Assert.IsNotNull(_currentNeed);
+			
+			if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
-				Debug.LogWarning("current need null");
-				Finish(GoalTags.wander);
-			}
-			else if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
-			{
-				Debug.LogWarning("current list satisfied");
 				Finish(GoalTags.wander);
 			}
 			else
-			{
-				
-				/*if(_currentNeed.Tag == NeedTags.satiation.ToString() &&
-					_humanNeeds.GetNeed(NeedTags.home.ToString()).CurrentItemListState == NeedItemStates.empty
-					)
-				{
-					Finish(GoalTags.recollect);
-				}*/
-				
-				
+			{				
 				SelectTargetAndWalk();
 				_lastAction = ActionTags.drop;
 			}
+
+			Finish(GoalTags.wander);
 		}
 
 		public override void Execute()
@@ -70,9 +58,8 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			base.Exit();
-			_currentNeed = null;
-			_currentTarget = null;
-			_currentAction = null;
+			_currentTarget = NullInteractable.Instance;
+			_currentAction = NullAction.Instance;
 		}
 
 		public void FinishedAction(bool completed)
@@ -95,7 +82,6 @@ namespace Monotheist.FSM
 					if (completed == false)
 					{
 						Debug.LogWarning("something went wrong");
-
 					}
 											
 					Finish(GoalTags.wander);		
@@ -112,18 +98,15 @@ namespace Monotheist.FSM
 					{
 						//The human get to the object and wants to recollect it. Bet before, he has to claim it.
 						ChangeAction(ActionTags.claim);
-						(_currentAction as ClaimAction).SetTarget(_currentTarget);
+						_currentAction.SetTarget(_currentTarget);
 					}
 					else
 					{
 						//The human already has the object and wants to release it.
 						_lastAction = ActionTags.drop;
 						ChangeAction(ActionTags.drop);
-						(_currentAction as DropAction).SetTarget(_currentTarget);
-					}
-					
-					
-					
+						_currentAction.SetTarget(_currentTarget);
+					}			
 					break;
 
 				case ActionTags.claim:
@@ -139,7 +122,7 @@ namespace Monotheist.FSM
 						//After the item is claimed, get it.
 						_lastAction = ActionTags.drag;
 						ChangeAction(ActionTags.drag);
-						(_currentAction as DragAction).SetTarget(_currentTarget);
+						_currentAction.SetTarget(_currentTarget);
 					}
 					else
 					{
@@ -152,29 +135,32 @@ namespace Monotheist.FSM
 					Finish(GoalTags.wander);
 					break;
 			}
-		}
-
+		}	
+		
 		private void SelectTargetAndWalk()
 		{
-			_currentTarget = Utils.SearchInteractable(_owner.position, _humanConfig.searchRange, _currentNeed.Tag);
+			Interactable newTarget = Utils.SearchInteractable(_owner.position, _humanConfig.searchRange, _currentNeed.Tag);
 
-			if (_currentTarget == null)
+			if (newTarget == NullInteractable.Instance)
 			{
-				Debug.LogWarning("current target null");
 				Finish(GoalTags.wander);
+				return;
 			}
-			else
-			{
-				ChangeAction(ActionTags.walk);
-				((WalkAction)_currentAction).SetTarget(_currentTarget.transform.position);
-			}
+
+			
+			_currentTarget = newTarget;
+			ChangeAction(ActionTags.walk);
+			_currentAction.SetTarget(_currentTarget);			
 		}
 
-		public static bool SearchUnclaimedItemsAround(Vector3 origin, float searchRange, string tag)
+		public static bool ThereAreUnclaimedItemsAround(Vector3 origin, float searchRange, string tag)
 		{
 			Interactable item = Utils.SearchInteractable(origin, searchRange, tag);
 
-			if (item != null && item.Owned == false) return true;
+			if (item != NullInteractable.Instance && item.Owned == false)
+			{
+				return true;
+			}
 
 			return false;
 		}
