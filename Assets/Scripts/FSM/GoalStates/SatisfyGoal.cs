@@ -56,7 +56,8 @@ namespace Monotheist.FSM
 		{
 			Assert.IsNotNull(_currentNeed);
 			Assert.AreNotEqual(_currentNeed, NullNeed.Instance);
-			
+			Assert.AreNotEqual(_currentTarget, NullInteractable.Instance);
+
 			if (_currentNeed.CurrentState == NeedStates.fullfilled)
 			{
 				Finish(GoalTags.wander);

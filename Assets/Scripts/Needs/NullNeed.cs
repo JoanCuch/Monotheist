@@ -17,6 +17,8 @@ namespace Monotheist.Human
 				if (_instance == null)
 					_instance = new NullNeed();
 
+				Assert.IsNotNull(_instance);
+
 				return _instance;
 			}
 		}
@@ -33,12 +35,6 @@ namespace Monotheist.Human
 		public new void AddItem(Interactable item) { }
 
 		public new void RemoveItem(Interactable item) { }
-
-		public new List<Interactable> GetItemList()
-		{
-			Assert.IsTrue(false);
-			return null;
-		}
 
 		public new void Subscribe(Action<Need> action) { }
 	}

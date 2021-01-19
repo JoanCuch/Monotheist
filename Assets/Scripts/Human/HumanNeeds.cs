@@ -68,42 +68,42 @@ namespace Monotheist.Human
 
 		public Need GetNeed(string tag)
 		{
-			Need urgent = null;
+			Need urgent = NullNeed.Instance;
 
 			foreach (Need need in _needList)
 			{
 				if (need.Tag == tag) urgent = need;
 			}
-			Assert.IsNotNull(urgent);
+			Assert.AreNotEqual(urgent, NullNeed.Instance);
 			return urgent;
 		}
 
 		private Need GetNeedViaSatisfaction(List<Need> list)
 		{
-			Need urgent = null;
+			Need urgent = NullNeed.Instance;
 
 			foreach (Need need in list)
 			{
-				if (urgent == null) urgent = need;
+				if (urgent == NullNeed.Instance) urgent = need;
 				else if (need.Satisfaction < urgent.Satisfaction)
 				{
 					urgent = need;
 				}
 			}
-			Assert.IsNotNull(urgent);
+			Assert.AreNotEqual(urgent, NullNeed.Instance);
 			return urgent;
 		}
 
 		private Need GetNeedViaItemList(List<Need> list)
 		{
-			Need urgent = null;
+			Need urgent = NullNeed.Instance;
 
 			foreach (Need need in list)
 			{
-				if (urgent == null) urgent = need;
+				if (urgent == NullNeed.Instance) urgent = need;
 				else if (need.ItemsListCount.Value < urgent.ItemsListCount.Value) urgent = need;
 			}
-			Assert.IsNotNull(urgent);
+			Assert.AreNotEqual(urgent, NullNeed.Instance);
 			return urgent;
 		}
 	

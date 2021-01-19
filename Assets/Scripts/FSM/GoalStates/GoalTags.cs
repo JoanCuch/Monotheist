@@ -11,7 +11,8 @@ namespace Monotheist.FSM
         satisfy,
         start,
         die,
-        nullGoal
+        nullGoal,
+        Goal
     }
 }
 

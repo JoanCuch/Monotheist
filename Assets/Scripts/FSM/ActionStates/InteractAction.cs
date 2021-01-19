@@ -1,4 +1,5 @@
 ﻿using Monotheist.Human;
+using UnityEngine.Assertions;
 
 namespace Monotheist.FSM
 {
@@ -21,7 +22,7 @@ namespace Monotheist.FSM
 		public override void Execute()
 		{
 			base.Execute();
-
+			Assert.AreNotEqual(_target, NullInteractable.Instance);
 			bool canContinue = _target.Interact(_humanNeeds);
 
 			if (!canContinue)
@@ -31,7 +32,7 @@ namespace Monotheist.FSM
 		public override void Exit()
 		{
 			base.Exit();
-			_target = null;
+			_target = NullInteractable.Instance;
 		}
 
 		public override void SetTarget(Interactable target)

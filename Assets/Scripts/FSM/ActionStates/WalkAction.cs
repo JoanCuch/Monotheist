@@ -24,19 +24,13 @@ namespace Monotheist.FSM {
 		{	
 			base.Execute();
 
-			if (_target == null)
-			{
-				//This null check is necessary in case that the target is destroyed by other human.
-				Finish(false);
-			}
-			else if (Vector2.Distance(_target, _owner.position) <= _humanConfig.interactRange)
+			if (Vector2.Distance(_target, _owner.position) <= _humanConfig.interactRange)
 			{
 				Finish(true);
+				return;
 			}
-			else
-			{
-				_owner.position = Vector2.MoveTowards(_owner.position, _target, _humanConfig.velocity * Time.deltaTime);
-			}
+			
+			_owner.position = Vector2.MoveTowards(_owner.position, _target, _humanConfig.velocity * Time.deltaTime);		
 		}
 
 		public override void Exit()

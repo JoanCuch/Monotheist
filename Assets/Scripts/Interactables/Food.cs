@@ -14,16 +14,16 @@ namespace Monotheist
         }
 
         public override bool Interact(HumanNeeds humanNeeds)
-        {
+        {     
             float nutrition = _nutritionPerSecond * Time.deltaTime;
 
             Need need = humanNeeds.GetNeed(tag);
 
-            Assert.IsNotNull(need);
+            Assert.AreNotEqual(need, NullNeed.Instance);
 
             if(_totalNutrition >= nutrition)
 			{
-                need.AddSatisfaction(nutrition * Time.deltaTime);
+                need.AddSatisfaction(nutrition);
                 _totalNutrition -= nutrition;
                 return true;
 			}

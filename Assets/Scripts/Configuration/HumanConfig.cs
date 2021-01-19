@@ -20,7 +20,6 @@ namespace Monotheist.Human
 				if(nullConfig == null)
 				{
 					nullConfig = Resources.Load<NeedConfig>("Configuration/NullConfig");
-					if (nullConfig != null) Debug.Log("null config found");
 				}
 				return nullConfig;
 			}
