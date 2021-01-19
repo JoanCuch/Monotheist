@@ -23,11 +23,17 @@ namespace Monotheist
 			}
 
 			//From the around objects, go to the nearest
+			Interactable target = SearchInteractableFromList(origin, searchRange, _targetList);
+			return target;
+		}
+
+		public static Interactable SearchInteractableFromList(Vector3 origin, float searchRange, List<Interactable> interactableList)
+		{
 			Interactable target = NullInteractable.Instance;
 
-			float minDistance = Mathf.Infinity;
+			float minDistance = searchRange;
 
-			foreach (Interactable inter in _targetList)
+			foreach (Interactable inter in interactableList)
 			{
 				float distance = Vector2.Distance(inter.transform.position, origin);
 
@@ -37,6 +43,7 @@ namespace Monotheist
 					target = inter;
 				}
 			}
+
 			Assert.IsNotNull(target);
 			return target;
 		}

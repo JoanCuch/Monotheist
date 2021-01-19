@@ -15,7 +15,6 @@ namespace Monotheist
 		public void Awake()
 		{
 			_instance = this;
-			Debug.Log("Null interactable: " + this);
 		}
 
 		public override bool Interact(HumanNeeds humanNeeds)

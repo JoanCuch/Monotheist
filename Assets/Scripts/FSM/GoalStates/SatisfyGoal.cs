@@ -22,6 +22,9 @@ namespace Monotheist.FSM
 			{
 				action.Subscribe(FinishedAction);
 			}
+
+			_currentTarget = NullInteractable.Instance;
+			_currentNeed = NullNeed.Instance;
 		}
 
 		public override void Enter()
@@ -30,52 +33,45 @@ namespace Monotheist.FSM
 
 			_currentNeed = _humanNeeds.GetMostUrgentNeed();
 
-			if (_currentNeed == null)
-			{
-				//There is no need, go walk a little
-				Finish(GoalTags.wander);
-			}
-			else if(_currentNeed.CurrentItemListState == NeedItemStates.empty)
+			Assert.IsNotNull(_currentNeed);
+			Assert.AreNotEqual(_currentNeed, NullNeed.Instance);
+			
+			if(_currentNeed.CurrentItemListState == NeedItemStates.empty)
 			{
 				//There are no objects, go search them
 				Finish(GoalTags.recollect);
+				return;
 			}
-			else
-			{
-				_currentTarget = SearchTarget(_currentNeed);
 
-				if (_currentTarget == null)
-				{
-					//There are no objectes, go search them
-					Finish(GoalTags.recollect);
-				}
-				else
-				{
-					ChangeAction(ActionTags.walk);
-					_currentAction.SetTarget(_currentTarget);
-				}
-			}				
+			_currentTarget = Utils.SearchInteractableFromList(_owner.position, Mathf.Infinity, _currentNeed.GetItemsList());
+
+			//If the list doesn't find any interactable, the ItemListState should be empty.
+			Assert.AreNotEqual(_currentTarget, NullInteractable.Instance);
+					
+			ChangeAction(ActionTags.walk);
+			_currentAction.SetTarget(_currentTarget);				
 		}
 
 		public override void Execute()
 		{
 			Assert.IsNotNull(_currentNeed);
+			Assert.AreNotEqual(_currentNeed, NullNeed.Instance);
+			
 			if (_currentNeed.CurrentState == NeedStates.fullfilled)
 			{
 				Finish(GoalTags.wander);
+				return;
 			}
-			else
-			{
-				base.Execute();
-			}		
+
+			base.Execute();
 		}
 
 		public override void Exit()
 		{
 			base.Exit();
-			_currentNeed = null;
-			_currentAction = null;
-			_currentTarget = null;
+			_currentNeed = NullNeed.Instance;
+			_currentAction = NullAction.Instance;
+			_currentTarget = NullInteractable.Instance;
 		}
 
 		private void FinishedAction(bool completed)
@@ -101,28 +97,7 @@ namespace Monotheist.FSM
 					Debug.LogWarning("Defualt on switch");
 					Finish(GoalTags.wander);
 					break;
-
 			}
-		}
-
-		private Interactable SearchTarget(Need _need)
-		{
-			List<Interactable> _targetList = _need.GetItemsList();
-			Interactable target = null;
-
-			float minDistance = Mathf.Infinity;
-
-			foreach (Interactable inter in _targetList)
-			{
-				float distance = Vector3.Distance(inter.transform.position, _owner.position);
-
-				if (distance < minDistance)
-				{
-					minDistance = distance;
-					target = inter;
-				}
-			}
-			return target;		
 		}
 
 		public static bool ThereAreItems(HumanNeeds _humanNeeds,string tag)

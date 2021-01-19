@@ -39,14 +39,11 @@ namespace Monotheist.FSM
 			if(_currentNeed.CurrentItemListState == NeedItemStates.satisfied)
 			{
 				Finish(GoalTags.wander);
+				return;
 			}
-			else
-			{				
-				SelectTargetAndWalk();
-				_lastAction = ActionTags.drop;
-			}
-
-			Finish(GoalTags.wander);
+							
+			SelectTargetAndWalk();
+			_lastAction = ActionTags.drop;
 		}
 
 		public override void Execute()

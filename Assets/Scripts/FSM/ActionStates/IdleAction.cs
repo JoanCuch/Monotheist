@@ -25,7 +25,9 @@ namespace Monotheist.FSM
 			_timer += -1 * Time.deltaTime;
 
 			if (_timer <= 0)
+			{
 				Finish(true);
+			}
 		}
 
 		public override void Exit()

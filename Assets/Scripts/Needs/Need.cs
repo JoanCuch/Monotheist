@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Assertions;
 
 namespace Monotheist.Human
 {
@@ -37,6 +38,7 @@ namespace Monotheist.Human
         public Need(NeedConfig config)
 		{
             _config = config;
+            Assert.IsNotNull(_config);
             _satisfaction = new ReactiveProperty<float>(_config.satisfactionInitial);
             _currentState = new ReactiveProperty<NeedStates>();
 

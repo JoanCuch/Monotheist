@@ -37,7 +37,7 @@ namespace Monotheist.FSM {
 		{
 			if (_currentAction == NullAction.Instance)
 				return;
-			
+			Assert.IsNotNull(_currentAction);
 			_currentAction.Execute();
 		}
 
@@ -66,11 +66,18 @@ namespace Monotheist.FSM {
 				}
 			}
 
-			Assert.AreNotEqual(newAction, NullAction.Instance);
 			Debug.Log(newAction);
+
+			Assert.AreNotEqual(newAction, NullAction.Instance);
+
+			Assert.IsNotNull(_currentAction);	
 			_currentAction.Exit();
-			_currentAction = newAction;		
+
+			_currentAction = newAction;
+
+			Assert.IsNotNull(_currentAction);
 	      	_currentAction.Enter();
+
 			_changedActionState?.Invoke(newAction);	
 		}	
 	

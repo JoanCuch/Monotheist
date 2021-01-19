@@ -74,7 +74,7 @@ namespace Monotheist.FSM
 				}
 			}
 
-            Assert.AreEqual(newGoal, NullGoal.Instance);
+            Assert.AreNotEqual(newGoal, NullGoal.Instance);
             _currentGoal.Value.Exit();
             _currentGoal.Value = newGoal;
             _currentGoal.Value.Enter();   

@@ -8,17 +8,23 @@ namespace Monotheist.Human
 	[CreateAssetMenu(fileName = "HumanConfig")]
 	public class HumanConfig : ScriptableObject
 	{
-		/*public enum Necessities
-		{
-			fullfilled,
-			energy,
-			satiation,
-			dead
-		}*/
-
 		public NeedConfig energyConfig;
 		public NeedConfig satiationConfig;
 		public NeedConfig homeConfig;
+		private static NeedConfig nullConfig;
+		
+		public static NeedConfig NullConfig
+		{
+			get
+			{
+				if(nullConfig == null)
+				{
+					nullConfig = Resources.Load<NeedConfig>("Configuration/NullConfig");
+					if (nullConfig != null) Debug.Log("null config found");
+				}
+				return nullConfig;
+			}
+		}
 		
 		//Energy
 		[Range(0, 100)] public float initialEnergy;

@@ -8,5 +8,6 @@ public enum NeedTags
 {
     energy,
     satiation,
-    home
+    home,
+    nullNeed
 }}
