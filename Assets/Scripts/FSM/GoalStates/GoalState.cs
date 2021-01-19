@@ -66,7 +66,7 @@ namespace Monotheist.FSM {
 				}
 			}
 
-			Debug.Log(newAction);
+			//Debug.Log(newAction);
 
 			Assert.AreNotEqual(newAction, NullAction.Instance);
 

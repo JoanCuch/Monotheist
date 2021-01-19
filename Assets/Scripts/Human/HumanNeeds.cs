@@ -35,7 +35,7 @@ namespace Monotheist.Human
 		}
 
 		public Need GetMostUrgentNeed()
-		{
+		{			
 			if(_criticList.Count > 0)
 			{
 				return GetNeedViaSatisfaction(_criticList);

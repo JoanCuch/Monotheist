@@ -51,7 +51,7 @@ namespace Monotheist.FSM
 			}
 
             if(_currentGoal.Value.Tag == GoalTags.wander)
-			{
+			{             
                 SelectNextGoal(currentNeed);
 			}
 
@@ -82,9 +82,10 @@ namespace Monotheist.FSM
     
         public void SelectNextGoal(Need currentNeed)
 		{
-            if (currentNeed.CurrentState != NeedStates.satisfied &&
-                currentNeed.CurrentState != NeedStates.fullfilled &&
-                SatisfyGoal.ThereAreItems(_humanNeeds, currentNeed.Tag)
+            Need need = _humanNeeds.GetMostUrgentNeed();
+                 
+            if (need.CurrentState != NeedStates.satisfied &&
+                SatisfyGoal.ThereAreItems(_humanNeeds, need.Tag)
                 )
             {               
                 ChangeState(GoalTags.satisfy);

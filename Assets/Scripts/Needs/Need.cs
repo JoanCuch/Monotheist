@@ -90,7 +90,8 @@ namespace Monotheist.Human
 		{
             _lastState = _currentState.Value;
             _currentState.Value = newState;
-		}  
+            _stateChanged?.Invoke(this);
+        }  
 
         private void CheckItemListState()
 		{
@@ -111,9 +112,8 @@ namespace Monotheist.Human
         private void ChangeItemListState(NeedItemStates newState)
 		{
             _lastListState = _currentListState.Value;
-            _currentListState.Value = newState;          
-            _stateChanged?.Invoke(this);
-		}
+            _currentListState.Value = newState;         
+        }
 
         public bool AddItem(Interactable item)
         { 
